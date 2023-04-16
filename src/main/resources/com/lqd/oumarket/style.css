@@ -1,0 +1,21 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Feb 23, 2023, 7:14:49 AM
+    Author     : admin
+*/
+
+
+Text.Title {
+    -fx-font-size: 30;
+    -fx-fill: #6b2f2f;
+    -fx-stroke: gold;
+    -fx-stroke-width: 3;
+}
+
+Button {
+    -fx-background-color: aqua;
+    -fx-text-fill: #6b2f2f;
+}

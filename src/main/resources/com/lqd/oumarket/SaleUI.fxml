@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.SaleController">
+   <left>
+      <VBox prefHeight="690.0" prefWidth="385.0" BorderPane.alignment="CENTER">
+         <children>
+            <TabPane prefHeight="290.0" prefWidth="385.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Khách hàng">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="251.0" prefWidth="385.0">
+                           <children>
+                              <GridPane prefHeight="252.0" prefWidth="385.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="204.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Tìm khách hàng:">
+                                       <font>
+                                          <Font name="System Italic" size="15.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="txtCusSearch">
+                                       <GridPane.margin>
+                                          <Insets left="135.0" right="20.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TableView fx:id="tbCustomers" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Sản phẩm">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="811.0" prefWidth="385.0">
+                           <children>
+                              <GridPane prefHeight="252.0" prefWidth="385.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="204.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Tìm sản phẩm:">
+                                       <font>
+                                          <Font name="System Italic" size="15.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="txtProdSearch">
+                                       <GridPane.margin>
+                                          <Insets left="135.0" right="20.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TableView fx:id="tbProducts" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <VBox prefHeight="400.0" prefWidth="385.0" style="-fx-border-color: #4e73df; -fx-border-width: 2px 0 0 0;">
+               <children>
+                  <Label prefHeight="36.0" prefWidth="195.0" text="Chi tiết hóa đơn">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="85.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TableView fx:id="tbReceipt" prefHeight="376.0" prefWidth="385.0" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="690.0" prefWidth="315.0" style="-fx-border-color: #4e73df; -fx-border-width: 0 0 0 2px;" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane layoutX="2.0" layoutY="-2.0" prefHeight="690.0" prefWidth="315.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="0.0" prefWidth="24.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="291.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="230.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="416.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="230.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="230.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="230.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="230.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="230.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="416.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="36.0" prefWidth="210.0" text="Hóa đơn tạm tính" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="30.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Tên KH:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#submitReceiptHandler" style="-fx-background-color: red;" text="Ghi nhận thanh toán" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="50.0" left="40.0" />
+                     </GridPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fx:id="txtCus" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="70.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Label text="Tạm tính:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Text fx:id="txtTemp" strokeType="OUTSIDE" strokeWidth="0.0" text="0 VNĐ" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Label text="Khuyến mãi:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Text fx:id="txtPromo" strokeType="OUTSIDE" strokeWidth="0.0" text="0 VNĐ" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="100.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Label text="Giảm giá sinh nhật:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Text fx:id="txtBirthDay" strokeType="OUTSIDE" strokeWidth="0.0" text="0%" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="135.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Label text="Tổng hóa đơn:" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font></Label>
+                  <Text fx:id="txtTotal" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="0 VNĐ" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="115.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Label text="Đã nhận (VNĐ):" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin></Label>
+                  <TextField fx:id="txtReceive" prefHeight="31.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets left="130.0" right="30.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Tiền thừa:" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin></Label>
+                  <Text fx:id="txtChanges" strokeType="OUTSIDE" strokeWidth="0.0" text="0 VNĐ" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <GridPane.margin>
+                        <Insets left="130.0" />
+                     </GridPane.margin>
+                  </Text>
+                  <Button mnemonicParsing="false" onAction="#cancelCustomerHandler" style="-fx-background-color: #4e73df;" text="Hủy bỏ" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="200.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

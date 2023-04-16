@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.MainUIController">
+   <left>
+      <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #4e73df;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="25.0" layoutY="58.0" prefHeight="575.0" prefWidth="150.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+               <children>
+                  <JFXButton fx:id="btnSale" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Bán Hàng" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="USER" size="19" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnUser" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Nhân Viên" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="19" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Loại SP" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="CALENDAR" size="19" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btnProd" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Sản phẩm" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" size="19" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnBra" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Chi Nhánh" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" size="19" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnPro" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Khuyến mãi" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="KEY" size="19" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnCus" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Khách hàng" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="19" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" text="Hóa đơn" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <effect>
+                        <Shadow />
+                     </effect>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="19" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
+   <top>
+      <AnchorPane prefHeight="70.0" prefWidth="900.0" style="-fx-border-color: #4e73df; -fx-border-width: 0 0 3px 0;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="27.0" layoutY="6.0" text="OUMARKET" textFill="#4e73df">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+               <effect>
+                  <Lighting diffuseConstant="2.0" specularConstant="0.86" specularExponent="30.73" surfaceScale="6.5">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+
+                  </Lighting>
+               </effect>
+            </Label>
+            <Button layoutX="785.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: #4e73df;" text="Đăng xuất" textFill="WHITE" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="CLOSED_HAND" />
+               </cursor>
+            </Button>
+            <Label layoutX="621.0" layoutY="22.0" text="Xin chào Hoàng!!!" textFill="#4e73df">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <VBox fx:id="vbxUI" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
