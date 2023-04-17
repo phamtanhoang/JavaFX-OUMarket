@@ -82,7 +82,9 @@ public class MainUIController implements Initializable {
         btnPro.setOnAction(evt -> {
             loadFxml("PromotionUI", vbxUI);
         });
-
+        btnRe.setOnAction(evt -> {
+            loadFxml("ReceiptUI", vbxUI);
+        });
         hi.setText("Xin chào "+ u.getName() + "!!!");
 
 

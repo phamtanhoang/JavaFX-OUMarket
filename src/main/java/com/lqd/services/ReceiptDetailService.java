@@ -5,9 +5,13 @@
 package com.lqd.services;
 
 import com.lqd.pojo.ProductPromotion;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import com.lqd.pojo.Promotion;
+import com.lqd.pojo.Receipt;
+import com.lqd.pojo.ReceiptDetail;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -31,4 +35,39 @@ public class ReceiptDetailService {
             }
         }
 }
+    public String getProductName(ReceiptDetail r) throws SQLException {
+        String productName=null;
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "SELECT p.name From receipt_detail r join product p on r.productID = p.id  where r.productID = ?";
+
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1,r.getProductID());
+            ResultSet rs = stm.executeQuery();
+//
+            if (rs.next()) {
+                productName = rs.getString("name");
+            }
+        }
+        return productName;
+    }
+    public List<ReceiptDetail> getReceiptDetails(Receipt r) throws SQLException {
+        List<ReceiptDetail> results = new ArrayList<>();
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "Select * from receipt_detail where receiptID = ?";
+
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1,r.getId());
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                ReceiptDetail receiptDetail = new ReceiptDetail(rs.getFloat("quantity"),
+                        rs.getString("productID"),
+                        rs.getString("receiptID"));
+                results.add(receiptDetail);
+            }
+        }
+
+        return results;
+    }
 }

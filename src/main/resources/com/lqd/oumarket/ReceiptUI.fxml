@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.ReceiptController">
+    <top>
+        <BorderPane prefHeight="340.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+            <top>
+                <Label text="Danh sách hóa đơn" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </BorderPane.margin>
+                    <font>
+                        <Font name="System Bold" size="25.0" />
+                    </font>
+                </Label>
+            </top>
+            <center>
+                <TableView fx:id="tbReceipt" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #4e73df; -fx-border-width: 0 0 2px 0;" BorderPane.alignment="CENTER" />
+            </center>
+        </BorderPane>
+    </top>
+    <bottom>
+        <BorderPane prefHeight="350.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+            <top>
+                <Label text="Chi tiết hóa đơn" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="25.0" />
+                    </font>
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </BorderPane.margin>
+                </Label>
+            </top>
+            <center>
+                <TableView fx:id="tbReceiptDetails" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            </center>
+        </BorderPane>
+    </bottom>
+</BorderPane>

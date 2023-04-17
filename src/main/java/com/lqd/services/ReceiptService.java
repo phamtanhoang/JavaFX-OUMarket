@@ -4,10 +4,12 @@
  */
 package com.lqd.services;
 
+import com.lqd.pojo.Product;
 import com.lqd.pojo.Receipt;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,7 @@ public class ReceiptService {
         try (Connection conn = jdbcService.getConn()) {
             conn.setAutoCommit(false);
             PreparedStatement stm1 = conn.prepareStatement("Insert into receipt(id,createddate,temptotal,promotiontotal,birthday,total,staffID,customerID)Values(?,?,?,?,?,?,?,?)");
+            System.out.println(stm1);
             stm1.setString(1, r.getId());
             stm1.setDate(2, r.getCreatedDate());
             stm1.setFloat(3, r.getTempTotal());
@@ -37,5 +40,74 @@ public class ReceiptService {
                 return false;
             }
         }
+    }
+    public List<Receipt> getReceipts() throws SQLException {
+        System.out.println("saoooooooooooooooooooooooooooooooooo");
+
+
+        List<Receipt> results = new ArrayList<>();
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "Select * from receipt";
+            PreparedStatement stm = conn.prepareCall(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Receipt r = new Receipt(rs.getString("id"),
+                        rs.getDate("createddate"),
+                        rs.getFloat("temptotal"),
+                        rs.getFloat("promotiontotal"),
+                        rs.getFloat("birthday"),
+                        rs.getFloat("total"),
+                        rs.getString("staffID"),
+                        rs.getString("customerID"));
+
+                results.add(r);
+            }
+        }
+        return results;
+    }
+    public String getStaffName(Receipt r) throws SQLException {
+        String staffName=null;
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "SELECT u.name From receipt r join user u on r.staffID = u.id where r.staffID = ? ";
+
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1,r.getStaffID());
+            ResultSet rs = stm.executeQuery();
+//
+            if (rs.next()) {
+                staffName = rs.getString("name");
+            }
+        }
+        return staffName;
+    }
+    public String getCustomerName(Receipt r) throws SQLException {
+        String cusName=null;
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "SELECT c.name From receipt r join customer c on r.customerID = c.id where r.customerID = ? ";
+
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1,r.getCustomerID());
+            ResultSet rs = stm.executeQuery();
+//
+            if (rs.next()) {
+                cusName = rs.getString("name");
+            }
+        }
+        return cusName;
+    }
+    public String getBranchAddress(Receipt r)throws SQLException{
+        String branchAddress=null;
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "SELECT b.name From receipt r join user u on r.staffID = u.id join branch b on u.branchID = b.id where r.staffID = ? ";
+
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1,r.getCustomerID());
+            ResultSet rs = stm.executeQuery();
+//
+            if (rs.next()) {
+                branchAddress = rs.getString("name");
+            }
+        }
+        return branchAddress;
     }
 }
