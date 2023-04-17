@@ -35,20 +35,6 @@ public class LoginController {
         UserService userService = new UserService();
         try {
             userLogin = userService.checkUser(username, password);
-//            if (userLogin != null) {
-//                Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("MainUI1.fxml"));
-//                Parent root = fxmlLoader.load();
-//
-//                MainUIController controller = fxmlLoader.getController();
-//                controller.loadMainUI(userLogin);
-//                Scene scene = new Scene(root);
-//
-//                Stage stage = new Stage();
-//                stage.setScene(scene);
-//                stage.show();
-//                loginStage.close();
-//            }
             if (userLogin != null) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainUI.fxml"));

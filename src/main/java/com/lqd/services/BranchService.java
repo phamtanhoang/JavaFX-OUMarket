@@ -37,8 +37,6 @@ public class BranchService {
                return false;
            }
        }
-
-
    }
 
 
@@ -49,19 +47,11 @@ public class BranchService {
            if (kw != null && !kw.isEmpty()) {
                sql += " where UPPER(name) like concat('%',UPPER(?),'%')";
            }
-
            PreparedStatement stm = conn.prepareCall(sql);
-
-
-
            if (kw != null && !kw.isEmpty()) {
                stm.setString(1, kw);
            }
-
-
            ResultSet rs = stm.executeQuery();
-
-
            while (rs.next()) {
                Branch p = new Branch(rs.getString("id"),
                        rs.getString("name"),
@@ -71,8 +61,6 @@ public class BranchService {
 
 
        }
-
-
        return results;
    }
 
@@ -80,8 +68,6 @@ public class BranchService {
    public Branch getBranchByID(String id) throws SQLException {
        try (Connection conn = jdbcService.getConn()) {
            String sql = "SELECT * FROM branch WHERE id=?";
-
-
            PreparedStatement stm = conn.prepareStatement(sql);
            stm.setString(1, id);
            ResultSet rs = stm.executeQuery();
@@ -98,8 +84,6 @@ public class BranchService {
    public Branch getBranchByName(String name) throws SQLException {
        try (Connection conn = jdbcService.getConn()) {
            String sql = "SELECT * FROM branch WHERE name=?";
-
-
            PreparedStatement stm = conn.prepareStatement(sql);
            stm.setString(1, name);
            ResultSet rs = stm.executeQuery();
@@ -112,8 +96,6 @@ public class BranchService {
        }
    }
    public boolean updateBranch(Branch p) throws SQLException {
-
-
        try (Connection conn = jdbcService.getConn()) {
           
            conn.setAutoCommit(false);
@@ -141,8 +123,6 @@ public class BranchService {
            String sql = "DELETE FROM branch WHERE id=?";
            PreparedStatement stm = conn.prepareCall(sql);
            stm.setString(1, id);
-
-
            return stm.executeUpdate() > 0;
        }
    }

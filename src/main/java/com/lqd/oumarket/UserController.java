@@ -13,6 +13,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,6 +30,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -45,6 +48,8 @@ public class UserController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
+    private BorderPane bp;
+    @FXML
     TableView<User> tbUsers;
     @FXML
     private TextField txtName;
@@ -53,7 +58,7 @@ public class UserController implements Initializable {
     @FXML
     private DatePicker dpDateOfBirth;
     @FXML
-    private ComboBox cbRole;
+    private Text txtRole;
     @FXML
     private TextField txtPhoneNumber;
     @FXML
@@ -74,16 +79,20 @@ public class UserController implements Initializable {
     private Button btnAdd;
     @FXML
     private Button btnSave;
-    @FXML
-    private Button btnCancel;
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            List<Branch> branches = null;
+            branches = p.getBranchs("");
+            this.cbBranch.setItems(FXCollections.observableList(branches));
+
+            ObservableList<String> sex = FXCollections.observableArrayList("Nam", "Nữ", "Khác");
+            cbSex.setItems(sex);
+
             loadTableColumns();
             loadTableData(null);
-            resetUI(LoginController.userLogin);
+            btnSave.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -171,7 +180,6 @@ public class UserController implements Initializable {
                 txtAddress.setText(user.getAddress());
                 txtPhoneNumber.setText(user.getPhoneNumber());
                 txtEmail.setText(user.getEmail());
-
                 List<Branch> branches = null;
                 Branch branchName = null;
                 try {
@@ -196,34 +204,27 @@ public class UserController implements Initializable {
                 String role = user.getRole().toLowerCase();
                 List<String> roles;
                 if ("admin".equals(role)) {
-                    roles = Arrays.asList("Admin");
+                    txtRole.setText("Quản lý");
                     txtEmail.setDisable(true);
                     txtAddress.setDisable(true);
                     cbSex.setDisable(true);
                     txtPhoneNumber.setDisable(true);
                     dpDateOfBirth.setDisable(true);
-                    cbRole.setDisable(true);
                     cbBranch.setDisable(true);
                 } else {
-                    roles = Arrays.asList("Quản lý", "Nhân viên");
+                    txtRole.setText("Nhân viên");
                     txtEmail.setDisable(false);
                     txtAddress.setDisable(false);
                     cbSex.setDisable(false);
                     txtPhoneNumber.setDisable(false);
                     dpDateOfBirth.setDisable(false);
-                    cbRole.setDisable(false);
                     cbBranch.setDisable(false);
                 }
-                this.cbRole.setItems(FXCollections.observableList(roles));
-                cbRole.getSelectionModel().select(user.getRole());
 
                 if (user.getDateOfBirth() != null) {
                     dpDateOfBirth.setValue(user.getDateOfBirth().toLocalDate());
                 } else {
                     dpDateOfBirth.setValue(null);
-                }
-                if(LoginController.userLogin.getRole().equals("quản lý")){
-                    this.cbBranch.setDisable(true);
                 }
                 cbSex.getSelectionModel().select(user.getSex());
                 txtUserName.setText(user.getUsername());
@@ -231,9 +232,9 @@ public class UserController implements Initializable {
                 btnAdd.setVisible(false);
                 btnSave.setVisible(true);
                 btnSave.setOnAction(event -> {
-                    if (cbRole.getSelectionModel().getSelectedItem().toString().toLowerCase().equals("admin")) {
+                    if (txtRole.getText().toLowerCase().equals("quản lý")) {
                         // Nếu người dùng là admin thì chỉ cần nhập thông tin tài khoản và mật khẩu
-                        if (txtUserName.getText().isEmpty()) {
+                        if (txtName.getText() == null || txtName.getText().isEmpty() || txtUserName.getText() == null || txtUserName.getText().isEmpty()) {
                             MessageBox.getBox("Thông báo", "Vui lòng nhập đầy đủ thông tin", Alert.AlertType.WARNING).show();
                         } else {
                             String password = pwfPassWord.getText();
@@ -241,7 +242,7 @@ public class UserController implements Initializable {
 
                             if ((password != null && password.equals(confirmPassword)) || (password == null && confirmPassword == null)) {
                                 // Mật khẩu trùng khớp, tiến hành mã hóa
-                                if (password != null) {
+                                if (!password.isEmpty()) {
                                     String hashedPassword = hash.hashPassword(password);
                                     user.setPassword(hashedPassword);
                                 }
@@ -254,7 +255,7 @@ public class UserController implements Initializable {
                                     if (u.updateUser(user)) {
                                         MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thành công", Alert.AlertType.INFORMATION).show();
                                         loadTableData(null);
-                                        resetUI(LoginController.userLogin);
+                                        resetUI();
                                     }
                                 } catch (SQLException ex) {
                                     MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thất bại", Alert.AlertType.ERROR).show();
@@ -266,45 +267,48 @@ public class UserController implements Initializable {
                         }
                     } else {
                         // Nếu người dùng không phải là admin thì cần nhập đầy đủ thông tin
-                        String password = pwfPassWord.getText();
-                        String confirmPassword = pwfConfirmPassWord.getText();
+                        if (txtName.getText() == null || txtName.getText().isEmpty() || txtAddress.getText() == null || txtAddress.getText().isEmpty() || txtPhoneNumber.getText() == null || txtPhoneNumber.getText().isEmpty() || txtEmail.getText() == null || txtEmail.getText().isEmpty() || txtAddress.getText() == null || txtAddress.getText().isEmpty() || txtUserName.getText() == null || txtUserName.getText().isEmpty() || dpDateOfBirth.getValue() == null || cbSex.getSelectionModel().getSelectedItem() == null || cbBranch.getSelectionModel().getSelectedItem() == null) {
+                            MessageBox.getBox("Thông báo", "Vui lòng nhập đầy đủ thông tin", Alert.AlertType.WARNING).show();
+                        }else {
+                            String password = pwfPassWord.getText();
+                            String confirmPassword = pwfConfirmPassWord.getText();
 
-                        if ((password != null && password.equals(confirmPassword)) || (password == null && confirmPassword == null)) {
-                            // Mật khẩu trùng khớp, tiến hành mã hóa
-                            if (password != null) {
-                                String hashedPassword = hash.hashPassword(password);
-                                user.setPassword(hashedPassword);
-                            }
-
-                            user.setName(txtName.getText());
-                            user.setAddress(txtAddress.getText());
-                            user.setPhoneNumber(txtPhoneNumber.getText());
-                            user.setEmail(txtEmail.getText());
-                            user.setUsername(txtUserName.getText());
-                            user.setRole(cbRole.getSelectionModel().getSelectedItem().toString());
-
-                            Branch selectedBranch = (Branch) cbBranch.getValue();
-                            if (selectedBranch != null) {
-                                String categoryId = selectedBranch.getId();
-                                user.setBranchID(categoryId);
-                            }
-                            user.setSex(cbSex.getSelectionModel().getSelectedItem().toString());
-                            user.setDateOfBirth(java.sql.Date.valueOf(dpDateOfBirth.getValue()));
-
-                            try {
-                                if (u.updateUser(user)) {
-                                    MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thành công", Alert.AlertType.INFORMATION).show();
-                                    loadTableData(null);
-                                    resetUI(LoginController.userLogin);
+                            if ((password != null && password.equals(confirmPassword)) || (password == null && confirmPassword == null)) {
+                                // Mật khẩu trùng khớp, tiến hành mã hóa
+                                if (!password.isEmpty()) {
+                                    String hashedPassword = hash.hashPassword(password);
+                                    user.setPassword(hashedPassword);
                                 }
-                            } catch (SQLException ex) {
-                                MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thất bại", Alert.AlertType.ERROR).show();
-                                Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        } else {
-                            MessageBox.getBox("Thông báo", "Mật khẩu không khớp", Alert.AlertType.ERROR).show();
-                        }
 
+                                user.setName(txtName.getText());
+                                user.setAddress(txtAddress.getText());
+                                user.setPhoneNumber(txtPhoneNumber.getText());
+                                user.setEmail(txtEmail.getText());
+                                user.setUsername(txtUserName.getText());
+                                user.setRole("staff");
+
+                                Branch selectedBranch = (Branch) cbBranch.getValue();
+                                if (selectedBranch != null) {
+                                    String categoryId = selectedBranch.getId();
+                                    user.setBranchID(categoryId);
+                                }
+                                user.setSex(cbSex.getSelectionModel().getSelectedItem().toString());
+                                user.setDateOfBirth(java.sql.Date.valueOf(dpDateOfBirth.getValue()));
+
+                                try {
+                                    if (u.updateUser(user)) {
+                                        MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thành công", Alert.AlertType.INFORMATION).show();
+                                        loadTableData(null);
+                                        resetUI();
+                                    }
+                                } catch (SQLException ex) {
+                                    MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thất bại", Alert.AlertType.ERROR).show();
+                                    Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } else {
+                                MessageBox.getBox("Thông báo", "Mật khẩu không khớp", Alert.AlertType.ERROR).show();
+                            }
+                        }
                     }
                 });
             });
@@ -344,53 +348,17 @@ public class UserController implements Initializable {
         this.tbUsers.setItems(FXCollections.observableList(users));
     }
 
-    public void resetUI(User u) throws SQLException {
-        try {
-            List<Branch> branches = p.getBranchs("");
-            this.cbBranch.setItems(FXCollections.observableList(branches));
-        }catch(Exception ex) {
-        }
-        if(u.getRole().toLowerCase().equals("admin")){
-
-            List<String> roles = Arrays.asList("Nhân viên");
-            this.cbRole.setItems(FXCollections.observableList(roles));
-            cbBranch.setDisable(false);
-        }
-
-        List<String> sex = Arrays.asList("Nam", "Nữ", "Khác");
-        this.cbSex.setItems(FXCollections.observableList(sex));
-
-
-        txtEmail.setDisable(false);
-        txtAddress.setDisable(false);
-        cbSex.setDisable(false);
-        txtPhoneNumber.setDisable(false);
-        dpDateOfBirth.setDisable(false);
-        cbRole.setDisable(false);
-
-        this.txtName.setText(null);
-        this.txtAddress.setText(null);
-        this.txtPhoneNumber.setText(null);
-        this.txtEmail.setText(null);
-        this.txtSearch.setText(null);
-        this.txtUserName.setText(null);
-        this.pwfPassWord.setText(null);
-        this.pwfConfirmPassWord.setText(null);
-        this.cbSex.getSelectionModel().clearSelection();
-        this.cbRole.getSelectionModel().clearSelection();
-        this.cbBranch.getSelectionModel().clearSelection();
-        this.dpDateOfBirth.setValue(null);
-        btnSave.setVisible(false);
-        btnAdd.setVisible(true);
+    public void resetUI() throws SQLException {
+        MainUIController mu = new MainUIController();
+        mu.loadFxml("UserUI", bp);
     }
 
     public void CancelUserHandler(ActionEvent event) throws SQLException {
-        loadTableData(null);
-        resetUI(LoginController.userLogin);
+        resetUI();
     }
 
     public void addUserHandler(ActionEvent event) throws SQLException {
-        if (txtName.getText() == null || txtName.getText().isEmpty() || txtAddress.getText() == null || txtAddress.getText().isEmpty() || txtPhoneNumber.getText() == null || txtPhoneNumber.getText().isEmpty() || txtEmail.getText() == null || txtEmail.getText().isEmpty() || txtAddress.getText() == null || txtAddress.getText().isEmpty() || txtUserName.getText() == null || txtUserName.getText().isEmpty() || pwfPassWord.getText() == null || pwfPassWord.getText().isEmpty() || pwfConfirmPassWord.getText() == null || pwfConfirmPassWord.getText().isEmpty() || dpDateOfBirth.getValue() == null || cbSex.getSelectionModel().getSelectedItem() == null || cbRole.getSelectionModel().getSelectedItem() == null || cbBranch.getSelectionModel().getSelectedItem() == null) {
+        if (txtName.getText() == null || txtName.getText().isEmpty() || txtAddress.getText() == null || txtAddress.getText().isEmpty() || txtPhoneNumber.getText() == null || txtPhoneNumber.getText().isEmpty() || txtEmail.getText() == null || txtEmail.getText().isEmpty() || txtAddress.getText() == null || txtAddress.getText().isEmpty() || txtUserName.getText() == null || txtUserName.getText().isEmpty() || pwfPassWord.getText() == null || pwfPassWord.getText().isEmpty() || pwfConfirmPassWord.getText() == null || pwfConfirmPassWord.getText().isEmpty() || dpDateOfBirth.getValue() == null || cbSex.getSelectionModel().getSelectedItem() == null || cbBranch.getSelectionModel().getSelectedItem() == null) {
             MessageBox.getBox("Thông báo", "Vui lòng nhập đầy đủ thông tin", Alert.AlertType.WARNING).show();
         } else {
             String password = pwfPassWord.getText();
@@ -408,7 +376,7 @@ public class UserController implements Initializable {
                             cbSex.getSelectionModel().getSelectedItem().toString(),
                             txtPhoneNumber.getText(),
                             txtAddress.getText(),
-                            cbRole.getSelectionModel().getSelectedItem().toString(),
+                            txtRole.getText(),
                             txtEmail.getText(),
                             txtUserName.getText(),
                             hashedPassword,
@@ -418,7 +386,7 @@ public class UserController implements Initializable {
                         if (u.addUser(user)) {
                             MessageBox.getBox("Thông báo", "Thêm người dùng mới thành công", Alert.AlertType.INFORMATION).show();
                             loadTableData(null);
-                            resetUI(LoginController.userLogin);
+                            resetUI();
                         }
                     } catch (SQLException ex) {
                         MessageBox.getBox("Thông báo", "Thêm người dùng mới thất bại", Alert.AlertType.ERROR).show();

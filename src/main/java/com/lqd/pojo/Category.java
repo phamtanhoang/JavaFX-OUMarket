@@ -4,6 +4,8 @@
  */
 package com.lqd.pojo;
 
+import java.util.UUID;
+
 /**
  *
  * @author admin
@@ -11,12 +13,16 @@ package com.lqd.pojo;
 public class Category {
     private String id;
     private String name;
-
+    {
+        id = UUID.randomUUID().toString();
+    }
     public Category(String id, String name) {
         this.id = id;
         this.name = name;
     }
-
+    public Category(String name) {
+        this.name = name;
+    }
     public Category() {
     }
 

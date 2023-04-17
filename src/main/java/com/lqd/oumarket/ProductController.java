@@ -70,7 +70,7 @@ public class ProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            List<Category> cates = s.getCategories();
+            List<Category> cates = s.getCategories(null);
             this.cbCategories.setItems(FXCollections.observableList(cates));
             loadTableColumns();
             loadTableData(null);
@@ -108,12 +108,6 @@ public class ProductController implements Initializable {
         }
 
     }
-//ĐAng lỗi
-
-    public void discardChangeHandler(ActionEvent event) {
-
-    }
-
     private void loadTableColumns() {
         TableColumn colName = new TableColumn("Name");
         colName.setCellValueFactory(new PropertyValueFactory("name"));

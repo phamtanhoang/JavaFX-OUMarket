@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.UserController">
    <center>
       <GridPane prefHeight="319.0" prefWidth="700.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -37,7 +37,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <TextField>
+            <TextField fx:id="txtName">
                <GridPane.margin>
                   <Insets left="100.0" right="20.0" />
                </GridPane.margin>
@@ -47,7 +47,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.rowIndex="1">
+            <TextField fx:id="txtAddress" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="100.0" right="20.0" />
                </GridPane.margin>
@@ -57,7 +57,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.rowIndex="2">
+            <TextField fx:id="txtEmail" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="100.0" right="20.0" />
                </GridPane.margin>
@@ -67,7 +67,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <TextField GridPane.rowIndex="3">
+            <TextField fx:id="txtPhoneNumber" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="100.0" right="20.0" />
                </GridPane.margin>
@@ -77,7 +77,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <DatePicker prefHeight="31.0" prefWidth="230.0" GridPane.rowIndex="4">
+            <DatePicker fx:id="dpDateOfBirth" prefHeight="31.0" prefWidth="230.0" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="100.0" right="20.0" />
                </GridPane.margin>
@@ -87,7 +87,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1">
+            <ComboBox fx:id="cbSex" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="110.0" right="40.0" />
                </GridPane.margin>
@@ -97,7 +97,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ComboBox fx:id="cbBranch" prefHeight="31.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="110.0" right="40.0" />
                </GridPane.margin>
@@ -107,7 +107,7 @@
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <TextField prefHeight="31.0" prefWidth="364.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="txtUserName" prefHeight="31.0" prefWidth="364.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="110.0" right="40.0" />
                </GridPane.margin>
@@ -117,7 +117,7 @@
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <PasswordField fx:id="pwfPassWord" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -125,12 +125,12 @@
                   <Insets left="110.0" right="40.0" />
                </GridPane.margin>
             </PasswordField>
-            <Label text="Nhập lại mk:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label text="Nhập lại MK:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <padding>
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <PasswordField fx:id="pwfConfirmPassWord" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -138,12 +138,12 @@
                   <Insets left="110.0" right="40.0" />
                </GridPane.margin>
             </PasswordField>
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Thêm" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addUserHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Thêm" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="40.0" />
+                  <Insets bottom="10.0" left="40.0" />
                </GridPane.margin>
             </Button>
             <Label text="Vai trò:" GridPane.rowIndex="5">
@@ -151,25 +151,25 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ADMIN" GridPane.rowIndex="5">
+            <Text fx:id="txtRole" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhân viên" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="100.0" />
                </GridPane.margin>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: red;" text="Hủy bỏ" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Button mnemonicParsing="false" onAction="#CancelUserHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: red;" text="Hủy bỏ" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="190.0" right="40.0" />
+                  <Insets bottom="10.0" left="190.0" right="40.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Lưu" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Lưu" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="40.0" />
+                  <Insets bottom="10.0" left="40.0" />
                </GridPane.margin>
             </Button>
          </children>
@@ -188,7 +188,7 @@
    <bottom>
       <BorderPane prefHeight="370.0" prefWidth="700.0" style="-fx-border-color: #4e73df; -fx-border-width: 2px 0 0 0;" BorderPane.alignment="CENTER">
          <bottom>
-            <TableView prefHeight="270.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
+            <TableView fx:id="tbUsers" prefHeight="270.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
          </bottom>
          <top>
             <AnchorPane prefHeight="30.0" prefWidth="700.0" BorderPane.alignment="CENTER">
@@ -198,7 +198,7 @@
                         <Font name="System Italic" size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="295.0" layoutY="-1.0" prefHeight="31.0" prefWidth="230.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <TextField fx:id="txtSearch" layoutX="295.0" layoutY="-1.0" prefHeight="31.0" prefWidth="230.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
          </top>

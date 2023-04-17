@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.CategoryController">
     <center>
         <GridPane prefHeight="172.0" prefWidth="700.0" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -31,12 +31,12 @@
                         <Insets left="100.0" />
                     </GridPane.margin>
                 </Label>
-                <TextField prefHeight="31.0" prefWidth="364.0">
+                <TextField fx:id="txtName" prefHeight="31.0" prefWidth="364.0">
                     <GridPane.margin>
                         <Insets left="270.0" right="120.0" />
                     </GridPane.margin>
                 </TextField>
-                <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Thêm" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addCategoryHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Thêm" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -44,7 +44,7 @@
                         <Insets bottom="10.0" left="200.0" right="400.0" />
                     </GridPane.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: red;" text="Hủy bỏ" textFill="WHITE" GridPane.rowIndex="1">
+                <Button mnemonicParsing="false" onAction="#CancelCategoryHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: red;" text="Hủy bỏ" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -52,7 +52,7 @@
                         <Insets bottom="10.0" left="400.0" right="200.0" />
                     </GridPane.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Lưu" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Lưu" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -76,7 +76,7 @@
     <bottom>
         <BorderPane prefHeight="485.0" prefWidth="700.0" style="-fx-border-color: #4e73df; -fx-border-width: 2px 0 0 0;" BorderPane.alignment="CENTER">
             <bottom>
-                <TableView prefHeight="378.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
+                <TableView fx:id="tbCategories" prefHeight="378.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
             </bottom>
             <top>
                 <AnchorPane prefHeight="30.0" prefWidth="700.0" BorderPane.alignment="CENTER">
@@ -86,8 +86,11 @@
                                 <Font name="System Italic" size="15.0" />
                             </font>
                         </Label>
-                        <TextField layoutX="305.0" layoutY="10.0" prefHeight="31.0" prefWidth="230.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <TextField fx:id="txtSearch" layoutX="305.0" layoutY="10.0" prefHeight="31.0" prefWidth="230.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
                     </children>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
                 </AnchorPane>
             </top>
             <center>
