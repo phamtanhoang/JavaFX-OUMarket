@@ -14,16 +14,20 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.lqd.utils.MessageBox;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -59,6 +63,9 @@ public class MainUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        btnCate.setOnAction(evt -> {
+            loadFxml("CategoryUI", vbxUI);
+        });
         btnProd.setOnAction(evt -> {
             loadFxml("ProductUI", vbxUI);
         });
@@ -66,14 +73,15 @@ public class MainUIController implements Initializable {
             loadFxml("SaleUI", vbxUI);
         });
         btnUser.setOnAction(evt -> {
-            try {
-                loadFxml("UserUI", vbxUI);
-                UserController uC = new UserController();
-                uC.resetUI(LoginController.userLogin);
-
-            } catch (SQLException ex) {
-                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            loadFxml("UserUI", vbxUI);
+//            try {
+//                loadFxml("UserUI", vbxUI);
+//                UserController uC = new UserController();
+//                uC.resetUI(LoginController.userLogin);
+//
+//            } catch (SQLException ex) {
+//                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         });
         btnBra.setOnAction(evt -> {
             loadFxml("BranchUI", vbxUI);
@@ -82,10 +90,36 @@ public class MainUIController implements Initializable {
         btnPro.setOnAction(evt -> {
             loadFxml("PromotionUI", vbxUI);
         });
+        btnRe.setOnAction(evt -> {
+            loadFxml("RecieptUI", vbxUI);
+        });
+
 
         hi.setText("Xin chào "+ u.getName() + "!!!");
 
-
+        btnLogout.setOnAction(evt -> {
+            Alert a = MessageBox.getBox("Thông báo",
+                    "Bạn muốn đăng xuất không?",
+                    Alert.AlertType.CONFIRMATION);
+            a.showAndWait().ifPresent(res -> {
+                if (res == ButtonType.OK) {
+                    // Đóng cửa sổ hiện tại
+                    Stage currentStage = (Stage) btnLogout.getScene().getWindow();
+                    currentStage.close();
+                    LoginController.userLogin = null;
+                    // Mở lại giao diện đăng nhập
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginUI.fxml"));
+                        Parent root = loader.load();
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        });
     }
 
     public void loadFxml(String fxmlFile, VBox UI) {
@@ -130,7 +164,6 @@ public class MainUIController implements Initializable {
             btnRe.setVisible(false);
             btnRe.setManaged(false);
         }
-
     }
 }
 
