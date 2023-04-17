@@ -159,8 +159,6 @@ public class BranchController implements Initializable {
                        branch.setAdress(txtAdress.getText());
                        try {
                            if (p.updateBranch(branch)) {
-
-
                                MessageBox.getBox("Thông báo", "Chỉnh sửa chi nhánh thành công", Alert.AlertType.INFORMATION).show();
                                loadTableData(null);
                                resetUI();

@@ -74,27 +74,19 @@ public class MainUIController implements Initializable {
         });
         btnUser.setOnAction(evt -> {
             loadFxml("UserUI", vbxUI);
-//            try {
-//                loadFxml("UserUI", vbxUI);
-//                UserController uC = new UserController();
-//                uC.resetUI(LoginController.userLogin);
-//
-//            } catch (SQLException ex) {
-//                Logger.getLogger(MainUIController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         });
         btnBra.setOnAction(evt -> {
             loadFxml("BranchUI", vbxUI);
         });
-
+        btnCus.setOnAction(evt -> {
+            loadFxml("CustomerUI", vbxUI);
+        });
         btnPro.setOnAction(evt -> {
             loadFxml("PromotionUI", vbxUI);
         });
         btnRe.setOnAction(evt -> {
             loadFxml("RecieptUI", vbxUI);
         });
-
-
         hi.setText("Xin chào "+ u.getName() + "!!!");
 
         btnLogout.setOnAction(evt -> {

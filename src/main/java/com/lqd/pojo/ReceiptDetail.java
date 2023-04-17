@@ -12,40 +12,23 @@ import java.util.UUID;
  */
 public class ReceiptDetail {
 
-    private String id;
-    private int quantity;
+    private float quantity;
     private String productID;
     private String receiptID;
 
-    {
-        id = UUID.randomUUID().toString();
-    }
+
     public ReceiptDetail(){
-        
-    }
-    public ReceiptDetail(int quantity, String productID, String receiptID) {
 
+    }
+    public ReceiptDetail(float quantity, String productID, String receiptID) {
         this.quantity = quantity;
         this.productID = productID;
         this.receiptID = receiptID;
     }
 
-    public ReceiptDetail(String id, int quantity, String productID, String receiptID) {
-        this.id = id;
-        this.quantity = quantity;
-        this.productID = productID;
-        this.receiptID = receiptID;
-    }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 

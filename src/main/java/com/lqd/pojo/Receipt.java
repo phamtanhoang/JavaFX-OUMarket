@@ -39,6 +39,17 @@ public class Receipt {
         this.customerID = customerID;
     }
 
+    public Receipt(String id, Date createdDate, float tempTotal, float promotionTotal, float birthDay, float total, String staffID, String customerID) {
+        this.id = id;
+        this.createdDate = createdDate;
+        this.total = total;
+        this.tempTotal = tempTotal;
+        this.promotionTotal = promotionTotal;
+        this.birthDay = birthDay;
+        this.staffID = staffID;
+        this.customerID = customerID;
+    }
+
     public void setReceipt(float birthDay,float tempTotal, float promotionTotal, float total ) {
         this.total = total;
         this.birthDay = birthDay;

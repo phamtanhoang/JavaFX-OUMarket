@@ -4,8 +4,10 @@
  */
 package com.lqd.oumarket;
 
+import com.lqd.pojo.Branch;
 import com.lqd.pojo.Category;
 import com.lqd.pojo.Product;
+import com.lqd.pojo.Promotion;
 import com.lqd.services.CategoryService;
 import com.lqd.services.ProductService;
 import com.lqd.utils.MessageBox;
@@ -20,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -30,6 +33,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
 /**
  * FXML Controller class
@@ -41,6 +45,8 @@ public class ProductController implements Initializable {
     static CategoryService s = new CategoryService();
     static ProductService p = new ProductService();
 
+    @FXML
+    private BorderPane bp;
     @FXML
      private TableView<Product> tbProducts;
     @FXML
@@ -74,7 +80,7 @@ public class ProductController implements Initializable {
             this.cbCategories.setItems(FXCollections.observableList(cates));
             loadTableColumns();
             loadTableData(null);
-
+            btnSave.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,39 +105,55 @@ public class ProductController implements Initializable {
         );
         try {
             if (p.addProduct(prod)) {
-                MessageBox.getBox("Question", "Add question successful", Alert.AlertType.INFORMATION).show();
+                MessageBox.getBox("Thành công", "Thêm sản phẩm thành công", Alert.AlertType.INFORMATION).show();
                 loadTableData(null);
             }
         } catch (SQLException ex) {
-            MessageBox.getBox("Question", "Add question failed", Alert.AlertType.ERROR).show();
+            MessageBox.getBox("Thất bại", "Thêm sản phẩm thất bại", Alert.AlertType.ERROR).show();
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
     private void loadTableColumns() {
-        TableColumn colName = new TableColumn("Name");
+        TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
         colName.setPrefWidth(150);
 
-        TableColumn colUnit = new TableColumn("Unit");
+        TableColumn colUnit = new TableColumn("Đơn vị");
         colUnit.setCellValueFactory(new PropertyValueFactory("unit"));
 
-        TableColumn colPrice = new TableColumn("Price");
+        TableColumn colPrice = new TableColumn("Giá");
         colPrice.setCellValueFactory(new PropertyValueFactory("price"));
+        colPrice.setCellFactory(column -> {
+            TableCell<Product, Float> cell = new TableCell<Product, Float>() {
+                @Override
+                protected void updateItem(Float item, boolean empty) {
+                    super.updateItem(item, empty);
 
-        TableColumn colOrigin = new TableColumn("Origin");
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        String formattedPrice = String.format("%,.0f VNĐ", item);
+                        setText(formattedPrice);
+                    }
+                }
+            };
+            return cell;
+        });
+
+        TableColumn colOrigin = new TableColumn("Xuất xứ");
         colOrigin.setCellValueFactory(new PropertyValueFactory("origin"));
 
-        TableColumn colCate = new TableColumn("CategoryID");
+        TableColumn colCate = new TableColumn("Loại sản phẩm");
         colCate.setCellValueFactory(new PropertyValueFactory("categoryID"));
 
         TableColumn colDel = new TableColumn();
         colDel.setCellFactory(r -> {
-            Button btn = new Button("Delete");
+            Button btn = new Button("Xóa");
 
             btn.setOnAction(evt -> {
-                Alert a = MessageBox.getBox("Question",
-                        "Are you sure to delete this question?",
+                Alert a = MessageBox.getBox("Thông báo",
+                        "Bạn có muốn xóa sản phẩm này không?",
                         Alert.AlertType.CONFIRMATION);
                 a.showAndWait().ifPresent(res -> {
                     if (res == ButtonType.OK) {
@@ -140,14 +162,14 @@ public class ProductController implements Initializable {
                         Product prod = (Product) cell.getTableRow().getItem();
                         try {
                             if ((p.deleteProduct(prod.getId()))) {
-                                MessageBox.getBox("Product", "Delete successful", Alert.AlertType.INFORMATION).show();
+                                MessageBox.getBox("Thành công", "Xóa sản phẩm thành công", Alert.AlertType.INFORMATION).show();
                                 this.loadTableData(null);
                             } else {
-                                MessageBox.getBox("Product", "Delete failed", Alert.AlertType.WARNING).show();
+                                MessageBox.getBox("Thất bại", "Xóa sản phẩm thất bại", Alert.AlertType.WARNING).show();
                             }
 
                         } catch (SQLException ex) {
-                            MessageBox.getBox("Question", ex.getMessage(), Alert.AlertType.WARNING).show();
+                            MessageBox.getBox("Thất bại", ex.getMessage(), Alert.AlertType.WARNING).show();
                             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
@@ -156,14 +178,26 @@ public class ProductController implements Initializable {
 
             });
 
-            TableCell c = new TableCell();
-            c.setGraphic(btn);
+            btn.setStyle("-fx-background-color:  red; -fx-text-fill: white;");
+            TableCell<Product, Void> c = new TableCell<>() {
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        Product branch = getTableView().getItems().get(getIndex());
+                        setGraphic(branch.getId() != null && !branch.getId().isEmpty() ? btn : null);
+                    } else {
+                        setGraphic(null);
+                    }
+                }
+            };
+            c.setAlignment(Pos.CENTER);
+            btn.setMaxWidth(Double.MAX_VALUE);
             return c;
         });
 
         TableColumn colUpdate = new TableColumn();
         colUpdate.setCellFactory(r -> {
-            Button btn = new Button("Update");
+            Button btn = new Button("Sửa");
 
             btn.setOnAction(evt -> {
 
@@ -174,7 +208,15 @@ public class ProductController implements Initializable {
                 txtUnit.setText(prod.getUnit());
                 txtPrice.setText(Float.toString(prod.getPrice()));
                 txtOrigin.setText(prod.getOrigin());
-                cbCategories.getSelectionModel().select(prod.getCategoryID());
+
+                ObservableList<Category> items = cbCategories.getItems();
+                cbCategories.setItems(items);
+                for (Category cate : items) {
+                    if (cate.getName().equals(prod.getCategoryID())) {
+                        this.cbCategories.getSelectionModel().select(cate);
+                        break;
+                    }
+                }
                 btnAdd.setVisible(false);
                 btnSave.setVisible(true);
                 btnSave.setOnAction(event -> {
@@ -188,30 +230,53 @@ public class ProductController implements Initializable {
                     try {
 
                         if (p.updateProduct(prod)) {
-
-                            MessageBox.getBox("Sucessful", "Update Product successful", Alert.AlertType.INFORMATION).show();
+                            resetUI();
+                            MessageBox.getBox("Thành công", "Sửa sản phẩm thành công", Alert.AlertType.INFORMATION).show();
                             loadTableData(null);
                         }
                     } catch (SQLException ex) {
-                        MessageBox.getBox("Fail", "Update Product failed", Alert.AlertType.ERROR).show();
+                        MessageBox.getBox("Thất bại", "Sửa sản phẩm thất bại", Alert.AlertType.ERROR).show();
                         Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
             });
 
-            TableCell c = new TableCell();
-            c.setGraphic(btn);
+            btn.setStyle("-fx-background-color:  #4e73df; -fx-text-fill: white;");
+            TableCell<Product, Void> c = new TableCell<>() {
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty) {
+                        Product branch = getTableView().getItems().get(getIndex());
+                        setGraphic(branch.getId() != null && !branch.getId().isEmpty() ? btn : null);
+                    } else {
+                        setGraphic(null);
+                    }
+                }
+            };
+            c.setAlignment(Pos.CENTER);
+            btn.setMaxWidth(Double.MAX_VALUE);
             return c;
         });
-        this.tbProducts.getColumns().addAll(colName, colUnit, colPrice, colOrigin, colCate, colDel, colUpdate);
+        this.tbProducts.getColumns().addAll(colName, colUnit, colPrice, colOrigin, colCate,colUpdate, colDel);
     }
 
     private void loadTableData(String kw) throws SQLException {
 
-        List<Product> ques = p.getProducts(kw);
-
+        List<Product> prods = p.getProducts(kw);
+        for (Product prod : prods) {
+            String CategoryID = prod.getCategoryID();
+            Category cate = s.getCategoryByID(CategoryID);
+            prod.setCategoryID(cate != null ? cate.getName() : "");
+        }
         this.tbProducts.getItems().clear();
-        this.tbProducts.setItems(FXCollections.observableList(ques));
+        this.tbProducts.setItems(FXCollections.observableList(prods));
     }
 
+    private void resetUI(){
+        MainUIController mu = new MainUIController();
+        mu.loadFxml("ProductUI", bp);
+    }
+    public void CancelProductHandler(ActionEvent event) throws SQLException {
+        resetUI();
+    }
 }

@@ -27,6 +27,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -154,17 +155,21 @@ public class UserController implements Initializable {
 
             });
 
+            btn.setStyle("-fx-background-color:  red; -fx-text-fill: white;");
             TableCell<User, Void> c = new TableCell<>() {
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
                     if (!empty) {
                         User user = getTableView().getItems().get(getIndex());
-                        setGraphic(user.getId() != null && !user.getId().isEmpty() ? btn : null);
+                        setGraphic(user.getId() != null && !user.getId().isEmpty()
+                                && !user.getRole().toLowerCase().equals("admin")? btn : null);
                     } else {
                         setGraphic(null);
                     }
                 }
             };
+            c.setAlignment(Pos.CENTER);
+            btn.setMaxWidth(Double.MAX_VALUE);
             return c;
         });
 
@@ -313,6 +318,7 @@ public class UserController implements Initializable {
                 });
             });
 
+            btn.setStyle("-fx-background-color:  #4e73df; -fx-text-fill: white;");
             TableCell<User, Void> c = new TableCell<>() {
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
@@ -324,9 +330,11 @@ public class UserController implements Initializable {
                     }
                 }
             };
+            c.setAlignment(Pos.CENTER);
+            btn.setMaxWidth(Double.MAX_VALUE);
             return c;
         });
-        this.tbUsers.getColumns().addAll(colName, colEmail, colBranch, colRole, colDel, colUpdate);
+        this.tbUsers.getColumns().addAll(colName, colEmail, colBranch, colRole,  colUpdate, colDel);
     }
 
     private void loadTableData(String kw) throws SQLException {
