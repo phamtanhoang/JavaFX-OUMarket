@@ -17,9 +17,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.SaleController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.SaleController">
    <left>
-      <VBox prefHeight="690.0" prefWidth="385.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="690.0" prefWidth="585.0" BorderPane.alignment="CENTER">
          <children>
             <TabPane prefHeight="290.0" prefWidth="385.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -27,7 +27,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="251.0" prefWidth="385.0">
                            <children>
-                              <GridPane prefHeight="252.0" prefWidth="385.0">
+                              <GridPane prefHeight="252.0" prefWidth="585.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
@@ -36,17 +36,17 @@
                                   <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="204.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Tìm khách hàng:">
+                                    <Label text="Tìm khách hàng (SĐT):">
                                        <font>
                                           <Font name="System Italic" size="15.0" />
                                        </font>
                                        <GridPane.margin>
-                                          <Insets left="20.0" />
+                                          <Insets left="60.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <TextField fx:id="txtCusSearch">
+                                    <TextField fx:id="txtCusSearch" prefHeight="31.0" prefWidth="417.0">
                                        <GridPane.margin>
-                                          <Insets left="135.0" right="20.0" />
+                                          <Insets left="220.0" right="70.0" />
                                        </GridPane.margin>
                                     </TextField>
                                     <TableView fx:id="tbCustomers" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
@@ -60,7 +60,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="811.0" prefWidth="385.0">
                            <children>
-                              <GridPane prefHeight="252.0" prefWidth="385.0">
+                              <GridPane prefHeight="252.0" prefWidth="585.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                  </columnConstraints>
@@ -74,15 +74,15 @@
                                           <Font name="System Italic" size="15.0" />
                                        </font>
                                        <GridPane.margin>
-                                          <Insets left="20.0" />
+                                          <Insets left="90.0" />
                                        </GridPane.margin>
                                     </Label>
                                     <TextField fx:id="txtProdSearch">
                                        <GridPane.margin>
-                                          <Insets left="135.0" right="20.0" />
+                                          <Insets left="200.0" right="100.0" />
                                        </GridPane.margin>
                                     </TextField>
-                                    <TableView fx:id="tbProducts" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                                    <TableView fx:id="tbProducts" prefHeight="200.0" prefWidth="466.0" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -98,7 +98,7 @@
                         <Font name="System Bold" size="25.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" left="85.0" top="10.0" />
+                        <Insets bottom="10.0" left="185.0" top="10.0" />
                      </VBox.margin>
                   </Label>
                   <TableView fx:id="tbReceipt" prefHeight="376.0" prefWidth="385.0" />

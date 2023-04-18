@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.PromotionController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.PromotionController">
     <center>
         <GridPane prefHeight="215.0" prefWidth="700.0" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -28,7 +28,7 @@
             <children>
                 <Label text="Từ ngày:" GridPane.rowIndex="1">
                     <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="65.0" />
                     </GridPane.margin>
                 </Label>
                 <Label text="Giá khuyến mãi:" GridPane.columnIndex="1">
@@ -38,17 +38,17 @@
                 </Label>
                 <TextField fx:id="txtNewPrice" GridPane.columnIndex="1">
                     <GridPane.margin>
-                        <Insets left="140.0" right="40.0" />
+                        <Insets left="140.0" right="70.0" />
                     </GridPane.margin>
                 </TextField>
                 <Label text="Sản phẩm:">
                     <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="65.0" />
                     </GridPane.margin>
                 </Label>
-                <ComboBox fx:id="cbProducts" prefHeight="31.0" prefWidth="217.0">
+                <ComboBox fx:id="cbProducts" prefHeight="31.0" prefWidth="265.0">
                     <GridPane.margin>
-                        <Insets left="130.0" right="20.0" />
+                        <Insets left="150.0" right="50.0" />
                     </GridPane.margin>
                 </ComboBox>
                 <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addPromotionHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Thêm" textFill="WHITE" GridPane.rowIndex="2">
@@ -56,7 +56,7 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets left="200.0" />
+                        <Insets left="240.0" />
                     </GridPane.margin>
                 </Button>
                 <Button mnemonicParsing="false" onAction="#CancelPromotionHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: red;" text="Hủy bỏ" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -64,7 +64,7 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets left="40.0" right="200.0" />
+                        <Insets left="100.0" right="200.0" />
                     </GridPane.margin>
                 </Button>
                 <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Lưu" textFill="WHITE" GridPane.rowIndex="2">
@@ -72,12 +72,12 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets left="200.0" right="40.0" />
+                        <Insets left="240.0" right="100.0" />
                     </GridPane.margin>
                 </Button>
-            <DatePicker fx:id="dpFromDate" GridPane.rowIndex="1">
+            <DatePicker fx:id="dpFromDate" prefHeight="31.0" prefWidth="250.0" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="130.0" right="20.0" />
+                  <Insets left="150.0" right="50.0" />
                </GridPane.margin>
             </DatePicker>
             <Label text="Đến ngày:" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -85,7 +85,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <DatePicker fx:id="dpToDate" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <DatePicker fx:id="dpToDate" prefHeight="31.0" prefWidth="240.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="140.0" right="40.0" />
                </GridPane.margin>

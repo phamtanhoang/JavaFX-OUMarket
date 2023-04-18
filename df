@@ -1,0 +1,51 @@
+[33mcommit 89bae400fc4d00055c314948f50e34446c800b16[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 862cdc1 c8cdd4e
+Author: DATql <91813899+DATql@users.noreply.github.com>
+Date:   Tue Apr 18 12:46:10 2023 +0700
+
+    Merge pull request #2 from phamtanhoang/LeDat2
+    
+    Le dat2
+
+[33mcommit c8cdd4ec557c7fd8a559a7bb33742c7b7a89e8bb[m[33m ([m[1;31morigin/LeDat2[m[33m)[m
+Merge: 1789156 862cdc1
+Author: DATql <91813899+DATql@users.noreply.github.com>
+Date:   Tue Apr 18 12:46:00 2023 +0700
+
+    Merge branch 'main' into LeDat2
+
+[33mcommit 178915625f0c843caaa9a57b764824aa48d4e680[m
+Author: DATql <goneanhem@gmail.com>
+Date:   Tue Apr 18 12:34:44 2023 +0700
+
+    TestFile(No ReceiptDetailTester)
+
+[33mcommit 862cdc127904ce53f015bd09addf974b97223015[m
+Author: phamtanhoang <88889770+phamtanhoang@users.noreply.github.com>
+Date:   Tue Apr 18 00:12:53 2023 +0700
+
+    Done project except Customer
+
+[33mcommit b272699fbdb375edc6ba8c440f3606d57dafc5a6[m
+Author: phamtanhoang <88889770+phamtanhoang@users.noreply.github.com>
+Date:   Mon Apr 17 14:41:42 2023 +0700
+
+    done login, branch, sale, user, category
+
+[33mcommit dcbfdd1903d89b902cd51d1ed681800e33ea4f74[m
+Author: DATql <goneanhem@gmail.com>
+Date:   Mon Apr 17 13:11:11 2023 +0700
+
+    added receiptdetail
+
+[33mcommit 266c3882c7a9b140f7513e5551cbe861e88098d4[m
+Author: phamtanhoang <88889770+phamtanhoang@users.noreply.github.com>
+Date:   Sun Apr 16 16:01:05 2023 +0700
+
+    done login, branch, sale
+
+[33mcommit 38a1a054318cc4744aa86f942a8e0f3e33171817[m
+Author: Phạm Tấn Hoàng <88889770+phamtanhoang@users.noreply.github.com>
+Date:   Sun Apr 16 15:57:26 2023 +0700
+
+    Initial commit

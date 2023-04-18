@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.BorderPane;
-
 import java.net.URL;
 import java.sql.SQLException;
 
@@ -48,12 +47,14 @@ public class ReceiptController implements Initializable{
 
         TableColumn colCreatedDate = new TableColumn("Ngày tạo");
         colCreatedDate.setCellValueFactory(new PropertyValueFactory("createdDate"));
-        colCreatedDate.setPrefWidth(100);
+        colCreatedDate.setPrefWidth(110);
 
         TableColumn colTemp = new TableColumn<>("Tạm tính");
         colTemp.setCellValueFactory(new PropertyValueFactory<>("tempTotal"));
 
-        colTemp.setPrefWidth(100);
+        colTemp.setPrefWidth(120);
+
+
         colTemp.setCellFactory(column -> {
             TableCell<Receipt, Float> cell = new TableCell<>() {
                 @Override
@@ -73,7 +74,7 @@ public class ReceiptController implements Initializable{
 
         TableColumn colPromo = new TableColumn("Khuyến Mãi");
         colPromo.setCellValueFactory(new PropertyValueFactory("promotionTotal"));
-        colPromo.setPrefWidth(100);
+        colPromo.setPrefWidth(120);
         colPromo.setCellFactory(column -> {
             TableCell<Receipt, Float> cell = new TableCell<>() {
                 @Override
@@ -93,7 +94,8 @@ public class ReceiptController implements Initializable{
 
         TableColumn colBirthDay = new TableColumn("Sinh Nhật");
         colBirthDay.setCellValueFactory(new PropertyValueFactory("birthDay"));
-        colBirthDay.setPrefWidth(100);
+        colBirthDay.setPrefWidth(80);
+
         colBirthDay.setCellFactory(column -> {
             TableCell<Receipt, Float> cell = new TableCell<>() {
                 @Override
@@ -113,7 +115,8 @@ public class ReceiptController implements Initializable{
 
         TableColumn colTotal = new TableColumn("Tổng");
         colTotal.setCellValueFactory(new PropertyValueFactory("total"));
-        colTotal.setPrefWidth(100);
+        colTotal.setPrefWidth(120);
+
         colTotal.setCellFactory(column -> {
             TableCell<Receipt, Float> cell = new TableCell<>() {
                 @Override
@@ -134,12 +137,13 @@ public class ReceiptController implements Initializable{
 
         TableColumn colStaff = new TableColumn("Nhân Viên");
         colStaff.setCellValueFactory(new PropertyValueFactory("staffID"));
-        colStaff.setPrefWidth(100);
+        colStaff.setPrefWidth(120);
 
 
         TableColumn colCus = new TableColumn("Khách Hàng");
         colCus.setCellValueFactory(new PropertyValueFactory("customerID"));
-        colCus.setPrefWidth(100);
+        colCus.setPrefWidth(120);
+
         TableColumn colView = new TableColumn();
         colView.setCellFactory(r -> {
             Button btn = new Button("Xem");
@@ -226,11 +230,11 @@ public class ReceiptController implements Initializable{
     public void loadReceiptDetailColumns() {
         TableColumn colName = new TableColumn("Tên sản phẩm");
         colName.setCellValueFactory(new PropertyValueFactory("productID"));
-        colName.setPrefWidth(150);
+        colName.setPrefWidth(300);
 
         TableColumn colQuantity = new TableColumn("Số lượng");
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        colQuantity.setPrefWidth(70);
+        colQuantity.setPrefWidth(150);
 
 
 

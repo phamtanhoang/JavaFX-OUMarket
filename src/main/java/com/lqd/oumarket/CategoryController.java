@@ -60,7 +60,7 @@ public class CategoryController implements Initializable {
     private void loadTableColumns() {
         TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
-        colName.setPrefWidth(200);
+        colName.setPrefWidth(500);
 
 
         TableColumn colDel = new TableColumn();
