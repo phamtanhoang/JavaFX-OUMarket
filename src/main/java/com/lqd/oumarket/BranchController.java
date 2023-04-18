@@ -77,12 +77,12 @@ public class BranchController implements Initializable {
    private void loadTableColumns() {
        TableColumn colName = new TableColumn("Tên chi nhánh");
        colName.setCellValueFactory(new PropertyValueFactory("name"));
-       colName.setPrefWidth(200);
+       colName.setPrefWidth(400);
 
 
        TableColumn colAdress = new TableColumn("Địa chỉ");
        colAdress.setCellValueFactory(new PropertyValueFactory("adress"));
-       colAdress.setPrefWidth(250);
+       colAdress.setPrefWidth(350);
       
        TableColumn colDel = new TableColumn();
        colDel.setCellFactory(r -> {
@@ -135,7 +135,7 @@ public class BranchController implements Initializable {
            btn.setMaxWidth(Double.MAX_VALUE);
            return c;
        });
-
+        colDel.setPrefWidth(80);
 
        TableColumn colUpdate = new TableColumn();
        colUpdate.setCellFactory(r -> {
@@ -187,6 +187,7 @@ public class BranchController implements Initializable {
            btn.setMaxWidth(Double.MAX_VALUE);
            return c;
        });
+       colUpdate.setPrefWidth(80);
        this.tbBranchs.getColumns().addAll(colName, colAdress, colUpdate, colDel);
    }
 

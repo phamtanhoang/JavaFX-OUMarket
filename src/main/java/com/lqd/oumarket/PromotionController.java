@@ -110,7 +110,7 @@ public class PromotionController implements Initializable {
 
         TableColumn colProductId = new TableColumn("Sản phẩm");
         colProductId.setCellValueFactory(new PropertyValueFactory("productID"));
-        colProductId.setPrefWidth(200);
+        colProductId.setPrefWidth(250);
 
         TableColumn<Promotion, Float> colNewPrice = new TableColumn<>("Giá khuyến mãi");
         colNewPrice.setCellValueFactory(new PropertyValueFactory<>("newPrice"));
@@ -130,15 +130,15 @@ public class PromotionController implements Initializable {
             };
             return cell;
         });
-        colNewPrice.setPrefWidth(120);
+        colNewPrice.setPrefWidth(150);
 
         TableColumn colFromDate = new TableColumn("Từ ngày");
         colFromDate.setCellValueFactory(new PropertyValueFactory("fromDate"));
-        colFromDate.setPrefWidth(150);
+        colFromDate.setPrefWidth(195);
 
         TableColumn colToDate = new TableColumn("Đến ngày");
         colToDate.setCellValueFactory(new PropertyValueFactory("toDate"));
-        colToDate.setPrefWidth(150);
+        colToDate.setPrefWidth(195);
 
         TableColumn colDel = new TableColumn();
         colDel.setCellFactory(r -> {

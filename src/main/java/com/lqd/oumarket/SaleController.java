@@ -122,17 +122,19 @@ public class SaleController implements Initializable {
     public void loadCustomerColumns() {
         TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
-        colName.setPrefWidth(100);
+        colName.setPrefWidth(175);
 
         TableColumn colPhone = new TableColumn("SĐT");
         colPhone.setCellValueFactory(new PropertyValueFactory("phoneNumber"));
+        colPhone.setPrefWidth(115);
 
         TableColumn colBirthDay = new TableColumn("Ngày sinh");
         colBirthDay.setCellValueFactory(new PropertyValueFactory("dateOfBirth"));
+        colBirthDay.setPrefWidth(115);
 
         TableColumn colEmail = new TableColumn("Email");
         colEmail.setCellValueFactory(new PropertyValueFactory("email"));
-        colEmail.setPrefWidth(60);
+        colEmail.setPrefWidth(115);
 
         TableColumn colAdd = new TableColumn();
         colAdd.setCellFactory(r -> {
@@ -210,10 +212,11 @@ public class SaleController implements Initializable {
     public void loadProductTableColumns() {
         TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
-        colName.setPrefWidth(120);
+        colName.setPrefWidth(145);
 
         TableColumn colUnit = new TableColumn("Đơn vị");
         colUnit.setCellValueFactory(new PropertyValueFactory("unit"));
+        colUnit.setPrefWidth(75);
 
         TableColumn colPrice = new TableColumn("Giá");
         colPrice.setCellValueFactory(new PropertyValueFactory("price"));
@@ -233,13 +236,16 @@ public class SaleController implements Initializable {
             };
             return cell;
         });
+        colPrice.setPrefWidth(100);
 
         TableColumn colOrigin = new TableColumn("Xuất Xứ");
         colOrigin.setCellValueFactory(new PropertyValueFactory("origin"));
+        colOrigin.setPrefWidth(100);
 
         TableColumn colCate = new TableColumn("Loại SP");
         colCate.setCellValueFactory(new PropertyValueFactory("categoryID"));
-        colCate.setPrefWidth(90);
+        colCate.setPrefWidth(100);
+
         TableColumn colAdd = new TableColumn();
         colAdd.setCellFactory(r -> {
             Button btn = new Button("Thêm");
@@ -327,11 +333,12 @@ public class SaleController implements Initializable {
     public void loadReceiptColumn() {
         TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
-
+        colName.setPrefWidth(140);
 
         TableColumn colUnit = new TableColumn("Đơn vị");
         colUnit.setCellValueFactory(new PropertyValueFactory("unit"));
-        colUnit.setPrefWidth(60);
+        colUnit.setPrefWidth(80);
+
         TableColumn colPrice = new TableColumn("Giá");
         colPrice.setCellValueFactory(new PropertyValueFactory("price"));
         colPrice.setCellFactory(column -> {
@@ -350,6 +357,7 @@ public class SaleController implements Initializable {
             };
             return cell;
         });
+        colPrice.setPrefWidth(90);
 
         TableColumn colNewPrice = new TableColumn("Khuyến mãi");
         colNewPrice.setCellValueFactory(new PropertyValueFactory("newPrice"));
@@ -369,12 +377,13 @@ public class SaleController implements Initializable {
             };
             return cell;
         });
+        colNewPrice.setPrefWidth(90);
 
         TableColumn colQuantity = new TableColumn("SL");
         colQuantity.setCellValueFactory(new PropertyValueFactory("quantity"));
         colQuantity.setPrefWidth(50);
-        TableColumn colQuantityTxt = new TableColumn("Nhập SL ");
 
+        TableColumn colQuantityTxt = new TableColumn("Nhập SL ");
         colQuantityTxt.setCellFactory(r -> {
             TextField txtQuantity = new TextField();
             txtQuantity.setText("");
@@ -409,6 +418,7 @@ public class SaleController implements Initializable {
 
                 }
             });
+            colQuantityTxt.setPrefWidth(80);
 
             TableCell<ProductPromotion, Void> c = new TableCell<>() {
                 protected void updateItem(Void item, boolean empty) {

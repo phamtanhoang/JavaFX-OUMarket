@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
@@ -58,10 +59,21 @@ public class MainUIController implements Initializable {
     private  Button btnLogout;
     @FXML
     private Label hi;
-
+    @FXML
+    private Text txtTitle;
+    @FXML
+    private Text txtRole;
+    @FXML
+    private Text txtBranch;
+    @FXML
+    private Label lbName;
+    @FXML
+    private BorderPane bp;
     private User u = LoginController.userLogin;
+    BranchService branchService = new BranchService();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
 
         btnCate.setOnAction(evt -> {
             loadFxml("CategoryUI", vbxUI);
@@ -87,8 +99,22 @@ public class MainUIController implements Initializable {
         btnRe.setOnAction(evt -> {
             loadFxml("RecieptUI", vbxUI);
         });
-        hi.setText("Xin chào "+ u.getName() + "!!!");
 
+        hi.setText("Xin chào "+ u.getName() + "!!!");
+        txtTitle.setText("Chào mừng bạn quay trở lại, "+LoginController.userLogin.getName()+"!!!");
+        if(LoginController.userLogin.getRole().toLowerCase().equals("admin")){
+            txtRole.setText("Vai trò: Quản lý");
+            txtBranch.setText(null);
+        }
+        if(LoginController.userLogin.getRole().toLowerCase().equals("staff"))
+        {
+            txtRole.setText("Vai trò: Nhân viên");
+            try {
+                txtBranch.setText("Chi nhánh: "+branchService.getBranchByID(LoginController.userLogin.getBranchID()).getName());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         btnLogout.setOnAction(evt -> {
             Alert a = MessageBox.getBox("Thông báo",
                     "Bạn muốn đăng xuất không?",
@@ -112,6 +138,10 @@ public class MainUIController implements Initializable {
                 }
             });
         });
+        lbName.setOnMouseClicked(event -> {
+            loadFxml("MainUI", bp);
+        });
+        loadMainUI(LoginController.userLogin);
     }
 
     public void loadFxml(String fxmlFile, VBox UI) {

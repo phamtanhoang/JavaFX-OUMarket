@@ -109,19 +109,19 @@ public class UserController implements Initializable {
     private void loadTableColumns() {
         TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
-        colName.setPrefWidth(155);
+        colName.setPrefWidth(230);
 
         TableColumn colEmail = new TableColumn("Email");
         colEmail.setCellValueFactory(new PropertyValueFactory("email"));
-        colEmail.setPrefWidth(200);
+        colEmail.setPrefWidth(220);
 
         TableColumn colBranch = new TableColumn("Chi nhánh");
         colBranch.setCellValueFactory(new PropertyValueFactory("branchID"));
-        colBranch.setPrefWidth(200);
+        colBranch.setPrefWidth(210);
 
         TableColumn colRole = new TableColumn("Vai trò");
         colRole.setCellValueFactory(new PropertyValueFactory("role"));
-        colRole.setPrefWidth(70);
+        colRole.setPrefWidth(130);
 
         TableColumn colDel = new TableColumn();
         colDel.setCellFactory(r -> {

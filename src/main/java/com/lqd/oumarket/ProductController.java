@@ -117,11 +117,11 @@ public class ProductController implements Initializable {
     private void loadTableColumns() {
         TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
-        colName.setPrefWidth(150);
+        colName.setPrefWidth(250);
 
         TableColumn colUnit = new TableColumn("Đơn vị");
         colUnit.setCellValueFactory(new PropertyValueFactory("unit"));
-
+        colUnit.setPrefWidth(120);
         TableColumn colPrice = new TableColumn("Giá");
         colPrice.setCellValueFactory(new PropertyValueFactory("price"));
         colPrice.setCellFactory(column -> {
@@ -140,12 +140,15 @@ public class ProductController implements Initializable {
             };
             return cell;
         });
+        colPrice.setPrefWidth(140);
 
         TableColumn colOrigin = new TableColumn("Xuất xứ");
         colOrigin.setCellValueFactory(new PropertyValueFactory("origin"));
+        colOrigin.setPrefWidth(140);
 
         TableColumn colCate = new TableColumn("Loại sản phẩm");
         colCate.setCellValueFactory(new PropertyValueFactory("categoryID"));
+        colCate.setPrefWidth(140);
 
         TableColumn colDel = new TableColumn();
         colDel.setCellFactory(r -> {

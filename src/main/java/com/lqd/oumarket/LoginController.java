@@ -39,10 +39,6 @@ public class LoginController {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainUI.fxml"));
                     Parent root = fxmlLoader.load();
-
-                    MainUIController controller = fxmlLoader.getController();
-                    controller.loadMainUI(userLogin);
-
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root));
                     stage.show();
