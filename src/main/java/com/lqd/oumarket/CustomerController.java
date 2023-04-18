@@ -5,12 +5,12 @@
 package com.lqd.oumarket;
 
 
-import com.lqd.pojo.Branch;
-import com.lqd.pojo.Customer;
-import com.lqd.pojo.User;
+import com.lqd.pojo.*;
 import com.lqd.services.BranchService;
+import com.lqd.services.CustomerService;
 import com.lqd.utils.MessageBox;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -38,7 +38,7 @@ public class CustomerController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    TableView<Branch> tbCustomers;
+    TableView<Customer> tbCustomers;
 
     @FXML
     private BorderPane bp;
@@ -58,6 +58,7 @@ public class CustomerController implements Initializable {
     private Button btnAdd;
     @FXML
     private Button btnSave;
+    private CustomerService customerService = new CustomerService();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -66,6 +67,7 @@ public class CustomerController implements Initializable {
             btnSave.setVisible(false);
             ObservableList<String> sex = FXCollections.observableArrayList("Nam", "Nữ", "Khác");
             cbSex.setItems(sex);
+            cbSex.getSelectionModel().selectFirst();
         } catch (SQLException ex) {
             Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,16 +92,39 @@ public class CustomerController implements Initializable {
         colSex.setCellValueFactory(new PropertyValueFactory("sex"));
 
         TableColumn colBirthday = new TableColumn("Ngày sinh");
-        colBirthday.setCellValueFactory(new PropertyValueFactory("birthday"));
+        colBirthday.setCellValueFactory(new PropertyValueFactory("dateOfBirth"));
 
         TableColumn colPhoneNumber = new TableColumn("SĐT");
-        colBirthday.setCellValueFactory(new PropertyValueFactory("phonenumber"));
+        colPhoneNumber.setCellValueFactory(new PropertyValueFactory("phoneNumber"));
 
         TableColumn colDel = new TableColumn();
         colDel.setCellFactory(r -> {
             Button btn = new Button("Xóa");
 
             btn.setOnAction(evt -> {
+                Alert a = MessageBox.getBox("Thông báo",
+                        "Bạn có muốn xóa sản phẩm này không?",
+                        Alert.AlertType.CONFIRMATION);
+                a.showAndWait().ifPresent(res -> {
+                    if (res == ButtonType.OK) {
+                        Button b = (Button) evt.getSource();
+                        TableCell cell = (TableCell) b.getParent();
+                        Customer customer = (Customer) cell.getTableRow().getItem();
+                        try {
+                            if ((customerService.deleteCustomer(customer.getId()))) {
+                                MessageBox.getBox("Thành công", "Xóa sản phẩm thành công", Alert.AlertType.INFORMATION).show();
+                                this.loadTableData(null);
+                            } else {
+                                MessageBox.getBox("Thất bại", "Xóa sản phẩm thất bại", Alert.AlertType.WARNING).show();
+                            }
+
+                        } catch (SQLException ex) {
+                            MessageBox.getBox("Thất bại", ex.getMessage(), Alert.AlertType.WARNING).show();
+                            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+                });
 
             });
             btn.setStyle("-fx-background-color:  red; -fx-text-fill: white;");
@@ -125,6 +150,46 @@ public class CustomerController implements Initializable {
 
             btn.setOnAction(evt -> {
 
+                TableRow<Customer> row = (TableRow<Customer>) ((Button) evt.getSource()).getParent().getParent();
+                int rowIndex = row.getIndex();
+                Customer cus = tbCustomers.getItems().get(rowIndex);
+                txtName.setText(cus.getName());
+                txtEmail.setText(cus.getEmail());
+                txtPhoneNumber.setText(cus.getPhoneNumber());
+                dpDateOfBirth.setValue(cus.getDateOfBirth().toLocalDate());
+                int sex;
+                if (cus.getSex().equals("Nam"))
+                sex= 0;
+                else if (cus.getSex().equals("Nữ"))
+                sex= 1;
+                else sex= 2;
+                cbSex.getSelectionModel().select(sex);
+                System.out.println( cus.getSex());
+
+                btnAdd.setVisible(false);
+                btnSave.setVisible(true);
+                btnSave.setOnAction(event -> {
+
+                    String  sexString =  cbSex.getValue().toString();
+
+                    cus.setName(txtName.getText());
+                    cus.setEmail(txtEmail.getText());
+                    cus.setPhoneNumber(txtPhoneNumber.getText());
+                    cus.setDateOfBirth(Date.valueOf(dpDateOfBirth.getValue()));
+                    cus.setSex(sexString);
+
+                    try {
+
+                        if (customerService.updateCustomer(cus)) {
+                            resetUI();
+                            MessageBox.getBox("Thành công", "Sửa thông tin thành công", Alert.AlertType.INFORMATION).show();
+                            loadTableData(null);
+                        }
+                    } catch (SQLException ex) {
+                        MessageBox.getBox("Thất bại", "Sửa thông tin thất bại", Alert.AlertType.ERROR).show();
+                        Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
             });
             btn.setStyle("-fx-background-color:  #4e73df; -fx-text-fill: white;");
             TableCell<Customer, Void> c = new TableCell<>() {
@@ -147,7 +212,10 @@ public class CustomerController implements Initializable {
 
 
     private void loadTableData(String kw) throws SQLException {
+        List<Customer> customers = customerService.getCustomers(null);
+        this.tbCustomers.getItems().clear();
 
+        this.tbCustomers.setItems(FXCollections.observableList(customers));
     }
     private void resetUI(){
         MainUIController mu = new MainUIController();
@@ -156,7 +224,22 @@ public class CustomerController implements Initializable {
 
 
     public void addCustomerHandler(ActionEvent event) throws SQLException {
-
+       String sex = cbSex.getValue().toString();
+        Customer customer = new Customer(
+                this.txtName.getText(),
+                Date.valueOf(dpDateOfBirth.getValue()),
+                sex,
+                (this.txtPhoneNumber.getText()),
+                this.txtEmail.getText());
+        try {
+            if (customerService.addCustomer(customer)) {
+                MessageBox.getBox("Thành công", "Thêm khách hàng thành công", Alert.AlertType.INFORMATION).show();
+                loadTableData(null);
+            }
+        } catch (SQLException ex) {
+            MessageBox.getBox("Thất bại", "Thêm khách hàng thất bại", Alert.AlertType.ERROR).show();
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void CancelCustomerHandler(ActionEvent event) throws SQLException {
         resetUI();

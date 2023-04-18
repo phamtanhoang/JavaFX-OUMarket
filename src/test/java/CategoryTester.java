@@ -54,7 +54,7 @@ public class CategoryTester {
     @Test
     public void testNameNotNull() {
         try {
-            List<Category> cates = s.getCategories();
+            List<Category> cates = s.getCategories(null);
             long r = cates.stream().filter(c -> c.getName() == null).count();
             Assertions.assertTrue(r == 0);
         } catch (SQLException ex) {
@@ -65,7 +65,7 @@ public class CategoryTester {
     @Test
     public void testNameUnique() {
         try {
-            List<Category> cates = s.getCategories();
+            List<Category> cates = s.getCategories(null);
 
             List<String> names = cates.stream().flatMap(c -> Stream.of(c.getName())).collect(Collectors.toList());
             Set<String> testNames = new HashSet<>(names);
