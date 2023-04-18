@@ -42,8 +42,6 @@ public class ReceiptService {
         }
     }
     public List<Receipt> getReceipts() throws SQLException {
-        System.out.println("saoooooooooooooooooooooooooooooooooo");
-
 
         List<Receipt> results = new ArrayList<>();
         try (Connection conn = jdbcService.getConn()) {
@@ -73,7 +71,7 @@ public class ReceiptService {
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setString(1,r.getStaffID());
             ResultSet rs = stm.executeQuery();
-//
+
             if (rs.next()) {
                 staffName = rs.getString("name");
             }
@@ -88,7 +86,7 @@ public class ReceiptService {
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setString(1,r.getCustomerID());
             ResultSet rs = stm.executeQuery();
-//
+
             if (rs.next()) {
                 cusName = rs.getString("name");
             }
@@ -103,11 +101,21 @@ public class ReceiptService {
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setString(1,r.getCustomerID());
             ResultSet rs = stm.executeQuery();
-//
+
             if (rs.next()) {
                 branchAddress = rs.getString("name");
             }
         }
         return branchAddress;
+    }
+
+
+    public boolean deleteReceipt(String id) throws SQLException {
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "DELETE FROM receipt WHERE id=?";
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1, id);
+            return stm.executeUpdate() > 0;
+        }
     }
 }

@@ -33,7 +33,6 @@ public class PromotionService {
                 conn.commit();
                 return true;
             } catch (SQLException ex) {
-                System.err.println(ex.getMessage());
                 return false;
             }
         }
@@ -58,7 +57,7 @@ public class PromotionService {
     }
 }
 
-    public List<Promotion> getPromotion() throws SQLException {
+    public List<Promotion> getPromotions() throws SQLException {
         List<Promotion> results = new ArrayList<>();
         try (Connection conn = jdbcService.getConn()) {
             String sql = "Select * from promotion";
@@ -82,7 +81,6 @@ public class PromotionService {
     }
 
     public boolean updatePromotion(Promotion p) throws SQLException {
-        System.out.println("đã chạy vào hàm");
 
         try (Connection conn = jdbcService.getConn()) {
             conn.setAutoCommit(false);
@@ -94,12 +92,10 @@ public class PromotionService {
             stm.setString(4, p.getProductID());
             stm.setString(5, p.getId());
             stm.executeUpdate();
-            System.out.println(stm);
             try {
                 conn.commit();
                 return true;
             } catch (SQLException ex) {
-                System.err.println(ex.getMessage());
                 return false;
             }
         }

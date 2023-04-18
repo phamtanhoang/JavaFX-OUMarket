@@ -61,8 +61,7 @@ public class BranchController implements Initializable {
        try {
            loadTableColumns();
            loadTableData(null);
-           btnSave.setVisible(false
-           );
+           btnSave.setVisible(false);
        } catch (SQLException ex) {
            Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
        }  
@@ -72,7 +71,8 @@ public class BranchController implements Initializable {
                } catch (SQLException ex) {
                    Logger.getLogger(PromotionController.class.getName()).log(Level.SEVERE, null, ex);
                }
-           });
+       });
+
    }   
    private void loadTableColumns() {
        TableColumn colName = new TableColumn("Tên chi nhánh");
@@ -83,10 +83,6 @@ public class BranchController implements Initializable {
        TableColumn colAdress = new TableColumn("Địa chỉ");
        colAdress.setCellValueFactory(new PropertyValueFactory("adress"));
        colAdress.setPrefWidth(250);
-      
-//        TableColumn colManager = new TableColumn("Quản lý");
-//        colAdress.setCellValueFactory(new PropertyValueFactory("manager"));
-//        colAdress.setPrefWidth(200);
       
        TableColumn colDel = new TableColumn();
        colDel.setCellFactory(r -> {
@@ -163,8 +159,6 @@ public class BranchController implements Initializable {
                        branch.setAdress(txtAdress.getText());
                        try {
                            if (p.updateBranch(branch)) {
-
-
                                MessageBox.getBox("Thông báo", "Chỉnh sửa chi nhánh thành công", Alert.AlertType.INFORMATION).show();
                                loadTableData(null);
                                resetUI();
@@ -229,7 +223,6 @@ public class BranchController implements Initializable {
        }
    }
    public void CancelBranchHandler(ActionEvent event) throws SQLException {
-       loadTableData(null);
        resetUI();
    }
   

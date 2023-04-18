@@ -5,6 +5,7 @@
 package com.lqd.oumarket;
 
 import com.lqd.pojo.Branch;
+import com.lqd.pojo.Category;
 import com.lqd.pojo.Product;
 import com.lqd.pojo.Promotion;
 import com.lqd.services.ProductService;
@@ -22,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -33,6 +35,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
 /**
  * FXML Controller class
@@ -43,6 +46,8 @@ public class PromotionController implements Initializable {
 
     static PromotionService p = new PromotionService();
     static ProductService prod = new ProductService();
+    @FXML
+    private BorderPane bp;
     @FXML
     private TableView<Promotion> tbPromotions;
     @FXML
@@ -57,28 +62,22 @@ public class PromotionController implements Initializable {
     private Button btnAdd;
     @FXML
     private Button btnSave;
-    @FXML
-    private Button btnCancel;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            List<Product> p = prod.getProducts(null);
+            this.cbProducts.setItems(FXCollections.observableList(p));
             loadTableColumns();
             loadTableData();
-            resetUI();
+            btnSave.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    private void resetUI() throws SQLException {
-        cbProducts.getSelectionModel().clearSelection();
-        cbProducts.setItems(FXCollections.observableArrayList(prod.getProducts(null)));
-        cbProducts.getSelectionModel().clearSelection();
-        btnAdd.setVisible(true);
-        btnSave.setVisible(false);
-        dpFromDate.setValue(null);
-        dpToDate.setValue(null);
-        txtNewPrice.setText("");
+    private void resetUI(){
+        MainUIController mu = new MainUIController();
+        mu.loadFxml("PromotionUI", bp);
     }
 
     public void addPromotionHandler(ActionEvent event) throws SQLException {
@@ -102,8 +101,7 @@ public class PromotionController implements Initializable {
         }
     }
 
-    public void discardSaveHandler(ActionEvent event) throws SQLException {
-        loadTableData();
+    public void CancelPromotionHandler(ActionEvent event) throws SQLException {
         resetUI();
     }
 
@@ -173,7 +171,7 @@ public class PromotionController implements Initializable {
                 });
 
             });
-
+            btn.setStyle("-fx-background-color:  red; -fx-text-fill: white;");
             TableCell<Promotion, Void> c = new TableCell<>() {
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
@@ -185,6 +183,8 @@ public class PromotionController implements Initializable {
                     }
                 }
             };
+            c.setAlignment(Pos.CENTER);
+            btn.setMaxWidth(Double.MAX_VALUE);
             return c;
         });
         TableColumn colUpdate = new TableColumn();
@@ -234,6 +234,7 @@ public class PromotionController implements Initializable {
                     }
                 });
             });
+            btn.setStyle("-fx-background-color:  #4e73df; -fx-text-fill: white;");
             TableCell<Promotion, Void> c = new TableCell<>() {
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
@@ -245,14 +246,16 @@ public class PromotionController implements Initializable {
                     }
                 }
             };
+            c.setAlignment(Pos.CENTER);
+            btn.setMaxWidth(Double.MAX_VALUE);
             return c;
         });
-        this.tbPromotions.getColumns().addAll(colProductId, colNewPrice, colFromDate, colToDate, colDel, colUpdate);
+        this.tbPromotions.getColumns().addAll(colProductId, colNewPrice, colFromDate, colToDate, colUpdate, colDel);
     }
 
 
     private void loadTableData() throws SQLException {
-        List<Promotion> promos = p.getPromotion();
+        List<Promotion> promos = p.getPromotions();
         this.tbPromotions.getItems().clear();
         for (Promotion promo : promos) {
             String productID = promo.getProductID();

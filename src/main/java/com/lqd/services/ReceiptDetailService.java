@@ -34,7 +34,9 @@ public class ReceiptDetailService {
                 return false;
             }
         }
-}
+
+    }
+
     public String getProductName(ReceiptDetail r) throws SQLException {
         String productName=null;
         try (Connection conn = jdbcService.getConn()) {
@@ -43,7 +45,7 @@ public class ReceiptDetailService {
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setString(1,r.getProductID());
             ResultSet rs = stm.executeQuery();
-//
+
             if (rs.next()) {
                 productName = rs.getString("name");
             }

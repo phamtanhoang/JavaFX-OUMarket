@@ -7,14 +7,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lqd.oumarket.PromotionController">
     <center>
         <GridPane prefHeight="215.0" prefWidth="700.0" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -37,7 +36,7 @@
                         <Insets left="20.0" />
                     </GridPane.margin>
                 </Label>
-                <TextField GridPane.columnIndex="1">
+                <TextField fx:id="txtNewPrice" GridPane.columnIndex="1">
                     <GridPane.margin>
                         <Insets left="140.0" right="40.0" />
                     </GridPane.margin>
@@ -47,12 +46,12 @@
                         <Insets left="30.0" />
                     </GridPane.margin>
                 </Label>
-                <ComboBox prefHeight="31.0" prefWidth="217.0">
+                <ComboBox fx:id="cbProducts" prefHeight="31.0" prefWidth="217.0">
                     <GridPane.margin>
                         <Insets left="130.0" right="20.0" />
                     </GridPane.margin>
                 </ComboBox>
-                <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Thêm" textFill="WHITE" GridPane.rowIndex="2">
+                <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addPromotionHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Thêm" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -60,7 +59,7 @@
                         <Insets left="200.0" />
                     </GridPane.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: red;" text="Hủy bỏ" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button mnemonicParsing="false" onAction="#CancelPromotionHandler" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: red;" text="Hủy bỏ" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -68,7 +67,7 @@
                         <Insets left="40.0" right="200.0" />
                     </GridPane.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Lưu" textFill="WHITE" GridPane.rowIndex="2">
+                <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #4e73df;" text="Lưu" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -76,7 +75,7 @@
                         <Insets left="200.0" right="40.0" />
                     </GridPane.margin>
                 </Button>
-            <DatePicker GridPane.rowIndex="1">
+            <DatePicker fx:id="dpFromDate" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="130.0" right="20.0" />
                </GridPane.margin>
@@ -86,7 +85,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <DatePicker fx:id="dpToDate" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="140.0" right="40.0" />
                </GridPane.margin>
@@ -107,20 +106,8 @@
     <bottom>
         <BorderPane prefHeight="441.0" prefWidth="700.0" style="-fx-border-color: #4e73df; -fx-border-width: 2px 0 0 0;" BorderPane.alignment="CENTER">
             <bottom>
-                <TableView prefHeight="340.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
+                <TableView fx:id="tbPromotions" prefHeight="375.0" prefWidth="700.0" BorderPane.alignment="CENTER" />
             </bottom>
-            <top>
-                <AnchorPane prefHeight="47.0" prefWidth="700.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <Label layoutX="110.0" layoutY="13.0" text="Tìm sản phẩm khuyến mãi:">
-                            <font>
-                                <Font name="System Italic" size="15.0" />
-                            </font>
-                        </Label>
-                        <TextField layoutX="320.0" layoutY="8.0" prefHeight="31.0" prefWidth="240.0" />
-                    </children>
-                </AnchorPane>
-            </top>
             <center>
                 <Label prefHeight="36.0" prefWidth="270.0" text="Danh sách khuyến mãi" BorderPane.alignment="CENTER">
                     <font>

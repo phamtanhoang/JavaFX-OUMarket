@@ -70,7 +70,7 @@ public class SaleController implements Initializable {
     private float temp;
     private float promo;
     private float total;
-    private float birthday = (float) 0.1;
+    private float birthday = 0;
     private List<ProductPromotion> pplist;
     static PromotionService proService = new PromotionService();
     static ProductService prodService = new ProductService();
@@ -197,6 +197,15 @@ public class SaleController implements Initializable {
         receipt.setCustomerID(null);
         birthday=0;
         setReceipt(pplist);
+        try {
+            Float x = Float.parseFloat(txtReceive.getText()) - total;
+            if (x >=0)
+                txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
+            else
+                txtChanges.setText("Số tiền chưa đủ!!!");
+        }catch (Exception exception){
+            txtChanges.setText("Số tiền không hợp lệ!!!");
+        }
     }
     public void loadProductTableColumns() {
         TableColumn colName = new TableColumn("Tên");
@@ -285,8 +294,7 @@ public class SaleController implements Initializable {
 
         });
 
-        this.tbProducts.getColumns()
-                .addAll(colName, colUnit, colPrice, colOrigin, colCate, colAdd);
+        this.tbProducts.getColumns().addAll(colName, colUnit, colPrice, colOrigin, colCate, colAdd);
     }
 
     public void loadTableProductData(String kw) throws SQLException {
@@ -495,7 +503,7 @@ public class SaleController implements Initializable {
                   return;
             }
             if(Float.parseFloat(txtReceive.getText()) - total<=0){
-                MessageBox.getBox("Thất bại", "Sô tiền thừa từ khách chưa đủ!!", Alert.AlertType.ERROR).show();
+                MessageBox.getBox("Thất bại", "Số tiền thừa từ khách chưa đủ!!", Alert.AlertType.ERROR).show();
                 return;
             }
             try {

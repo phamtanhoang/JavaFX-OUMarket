@@ -18,7 +18,7 @@ public class ReceiptDetail {
 
 
     public ReceiptDetail(){
-        
+
     }
     public ReceiptDetail(float quantity, String productID, String receiptID) {
         this.quantity = quantity;
