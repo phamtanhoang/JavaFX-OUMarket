@@ -108,11 +108,15 @@ public class SaleController implements Initializable {
                 return;
             }
             try {
-                Float x = Float.parseFloat(txtReceive.getText()) - total;
-                if (x >=0)
-                    txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
-                else
-                    txtChanges.setText("Số tiền chưa đủ!!!");
+                if(txtReceive.getText()==null||txtReceive.getText().isEmpty()){
+                    txtChanges.setText("0 VNĐ");
+                }else {
+                    Float x = Float.parseFloat(txtReceive.getText()) - total;
+                    if (x >= 0)
+                        txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
+                    else
+                        txtChanges.setText("Số tiền chưa đủ!!!");
+                }
             }catch (Exception exception){
                 txtChanges.setText("Số tiền không hợp lệ!!!");
             }
@@ -148,25 +152,30 @@ public class SaleController implements Initializable {
                 txtCus.setText(customer.getName());
                 java.time.LocalDate localDate = customer.getDateOfBirth().toLocalDate();
                 java.time.LocalDate now = java.time.LocalDate.now();
-                if (localDate.getMonthValue() == now.getMonthValue() && localDate.getDayOfMonth() == now.getDayOfMonth()) {
+
+                if ((localDate.getMonthValue() == now.getMonthValue() && localDate.getDayOfMonth() == now.getDayOfMonth()) && (temp-promo)>1000000) {
                     txtBirthDay.setText("10%");
                     birthday=(float) 0.1;
                 } else {
-                    txtBirthDay.setText("0%");
-                    birthday = 0;
+                    txtBirthDay.setText("2%");
+                    birthday =(float) 0.02;
                 }
-                setReceipt(pplist);
 
+                setReceipt(pplist);
                 if(txtReceive==null||txtReceive.getText().isEmpty()){
                     txtChanges.setText("0 VNĐ");
                     return;
                 }
                 try {
-                    Float x = Float.parseFloat(txtReceive.getText()) - total;
-                    if (x >=0)
-                        txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
-                    else
-                        txtChanges.setText("Số tiền chưa đủ!!!");
+                    if(txtReceive.getText()==null||txtReceive.getText().isEmpty()){
+                        txtChanges.setText("0 VNĐ");
+                    }else {
+                        Float x = Float.parseFloat(txtReceive.getText()) - total;
+                        if (x >= 0)
+                            txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
+                        else
+                            txtChanges.setText("Số tiền chưa đủ!!!");
+                    }
                 }catch (Exception exception){
                     txtChanges.setText("Số tiền không hợp lệ!!!");
                 }
@@ -200,11 +209,15 @@ public class SaleController implements Initializable {
         birthday=0;
         setReceipt(pplist);
         try {
-            Float x = Float.parseFloat(txtReceive.getText()) - total;
-            if (x >=0)
-                txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
-            else
-                txtChanges.setText("Số tiền chưa đủ!!!");
+            if(txtReceive.getText()==null||txtReceive.getText().isEmpty()){
+                txtChanges.setText("0 VNĐ");
+            }else {
+                Float x = Float.parseFloat(txtReceive.getText()) - total;
+                if (x >= 0)
+                    txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
+                else
+                    txtChanges.setText("Số tiền chưa đủ!!!");
+            }
         }catch (Exception exception){
             txtChanges.setText("Số tiền không hợp lệ!!!");
         }
@@ -491,17 +504,16 @@ public class SaleController implements Initializable {
 
     public void deleteReceiptItem(ProductPromotion pp) {
         temp -= pp.getPrice() * pp.getQuantity();
-        txtTemp.setText(String.valueOf(temp));
         promo -= (pp.getPrice() - pp.getNewPrice()) * pp.getQuantity();
-        txtPromo.setText(String.valueOf(promo));
         total -= pp.getNewPrice();
-        txtTotal.setText(String.valueOf(total));
-        if (txtReceive.getText().isEmpty()) {
-            txtChanges.setText("Chưa nhập số tiền");
+        if(txtReceive.getText()==null||txtReceive.getText().isEmpty()){
+            txtChanges.setText("0 VNĐ");
         } else {
-            txtChanges.setText(String.valueOf(Float.parseFloat(txtReceive.getText()) - total));
+            txtChanges.setText(String.format("%,.0f VNĐ", Float.parseFloat(txtReceive.getText()) - total));
         }
-
+        txtTotal.setText(String.format("%,.0f VNĐ", total));
+        txtTemp.setText(String.format("%,.0f VNĐ", temp));
+        txtPromo.setText(String.format("%,.0f VNĐ", promo));
     }
     
     public void submitReceiptHandler() throws SQLException{

@@ -172,14 +172,14 @@
                         <Insets left="100.0" />
                      </GridPane.margin>
                   </Text>
-                  <Label text="Giảm giá sinh nhật:" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label text="Giảm giá thành viên:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </Label>
                   <Text fx:id="txtBirthDay" strokeType="OUTSIDE" strokeWidth="0.0" text="0%" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
-                        <Insets left="135.0" />
+                        <Insets left="150.0" />
                      </GridPane.margin>
                   </Text>
                   <Label text="Tổng hóa đơn:" GridPane.columnIndex="1" GridPane.rowIndex="5">

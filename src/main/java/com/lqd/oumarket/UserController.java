@@ -12,6 +12,7 @@ import com.lqd.services.UserService;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -262,7 +263,16 @@ public class UserController implements Initializable {
                                         loadTableData(null);
                                         resetUI();
                                     }
-                                } catch (SQLException ex) {
+
+                                }
+                                catch (SQLIntegrityConstraintViolationException exception){
+                                    if (exception.getMessage().contains("email"))
+                                        MessageBox.getBox("Thất bại", "Email đã tồn tại!", Alert.AlertType.ERROR).show();
+                                    else if (exception.getMessage().contains("phonenumber"))
+                                        MessageBox.getBox("Thất bại", "Số điện thoại đã tồn tại!", Alert.AlertType.ERROR).show();
+                                    else if (exception.getMessage().contains("username"))
+                                        MessageBox.getBox("Thất bại", "Tên đăng nhập đã tồn tại!", Alert.AlertType.ERROR).show();
+                                }catch (SQLException ex) {
                                     MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thất bại", Alert.AlertType.ERROR).show();
                                     Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -306,7 +316,16 @@ public class UserController implements Initializable {
                                         loadTableData(null);
                                         resetUI();
                                     }
-                                } catch (SQLException ex) {
+                                }
+                                catch (SQLIntegrityConstraintViolationException exception){
+                                    if (exception.getMessage().contains("email"))
+                                        MessageBox.getBox("Thất bại", "Email đã tồn tại!", Alert.AlertType.ERROR).show();
+                                    else if (exception.getMessage().contains("phonenumber"))
+                                        MessageBox.getBox("Thất bại", "Số điện thoại đã tồn tại!", Alert.AlertType.ERROR).show();
+                                    else if (exception.getMessage().contains("username"))
+                                        MessageBox.getBox("Thất bại", "Tên đăng nhập đã tồn tại!", Alert.AlertType.ERROR).show();
+                                }
+                                catch (SQLException ex) {
                                     MessageBox.getBox("Thông báo", "Chỉnh sửa người dùng thất bại", Alert.AlertType.ERROR).show();
                                     Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -392,11 +411,20 @@ public class UserController implements Initializable {
                     );
                     try {
                         if (u.addUser(user)) {
-                            MessageBox.getBox("Thông báo", "Thêm người dùng mới thành công", Alert.AlertType.INFORMATION).show();
+                            MessageBox.getBox("Thành công", "Thêm người dùng mới thành công", Alert.AlertType.INFORMATION).show();
                             loadTableData(null);
                             resetUI();
                         }
-                    } catch (SQLException ex) {
+                    }
+                    catch (SQLIntegrityConstraintViolationException exception){
+                        if (exception.getMessage().contains("email"))
+                            MessageBox.getBox("Thất bại", "Email đã tồn tại!", Alert.AlertType.ERROR).show();
+                        else if (exception.getMessage().contains("phonenumber"))
+                            MessageBox.getBox("Thất bại", "Số điện thoại đã tồn tại!", Alert.AlertType.ERROR).show();
+                        else if (exception.getMessage().contains("username"))
+                            MessageBox.getBox("Thất bại", "Tên đăng nhập đã tồn tại!", Alert.AlertType.ERROR).show();
+                    }
+                    catch (SQLException ex) {
                         MessageBox.getBox("Thông báo", "Thêm người dùng mới thất bại", Alert.AlertType.ERROR).show();
                         Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
                     }

@@ -13,6 +13,7 @@ import com.lqd.services.CustomerService;
 import com.lqd.utils.MessageBox;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -182,7 +183,14 @@ public class CustomerController implements Initializable {
                                 loadTableData(null);
                                 resetUI();
                             }
-                        } catch (SQLException ex) {
+                        }
+                        catch (SQLIntegrityConstraintViolationException exception){
+                            if (exception.getMessage().contains("email"))
+                                MessageBox.getBox("Thất bại", "Email đã tồn tại!", Alert.AlertType.ERROR).show();
+                            else if (exception.getMessage().contains("phonenumber"))
+                                MessageBox.getBox("Thất bại", "Số điện thoại đã tồn tại!", Alert.AlertType.ERROR).show();
+                        }
+                        catch (SQLException ex) {
                             MessageBox.getBox("Thất bại", "Chỉnh sửa khách hàng thất bại", Alert.AlertType.ERROR).show();
                             Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -242,7 +250,14 @@ public class CustomerController implements Initializable {
                     loadTableData(null);
                     resetUI();
                 }
-            } catch (SQLException ex) {
+            }
+            catch (SQLIntegrityConstraintViolationException exception){
+                if (exception.getMessage().contains("email"))
+                    MessageBox.getBox("Thất bại", "Email đã tồn tại!", Alert.AlertType.ERROR).show();
+                else if (exception.getMessage().contains("phonenumber"))
+                    MessageBox.getBox("Thất bại", "Số điện thoại đã tồn tại!", Alert.AlertType.ERROR).show();
+            }
+            catch (SQLException ex) {
                 MessageBox.getBox("Thất bại", "Thêm khách hàng mới thất bại", Alert.AlertType.ERROR).show();
                 Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
             }

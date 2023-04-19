@@ -85,7 +85,7 @@ public class ReceiptController implements Initializable{
             return cell;
         });
 
-        TableColumn colBirthDay = new TableColumn("Sinh Nhật");
+        TableColumn colBirthDay = new TableColumn("Thành viên");
         colBirthDay.setCellValueFactory(new PropertyValueFactory("birthDay"));
         colBirthDay.setPrefWidth(80);
 

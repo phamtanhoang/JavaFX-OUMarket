@@ -94,23 +94,27 @@ public class ProductController implements Initializable {
     }
 
     public void addProductHandler(ActionEvent event) throws SQLException {
-        Category selectedCategory = (Category) cbCategories.getValue();
-        String categoryId = selectedCategory.getId();
-        Product prod = new Product(
-                this.txtName.getText(),
-                this.txtUnit.getText(),
-                Float.parseFloat(this.txtPrice.getText()),
-                this.txtOrigin.getText(),
-                categoryId
-        );
-        try {
-            if (p.addProduct(prod)) {
-                MessageBox.getBox("Thành công", "Thêm sản phẩm thành công", Alert.AlertType.INFORMATION).show();
-                loadTableData(null);
+        if (txtName.getText() == null || txtName.getText().isEmpty() || txtUnit.getText() == null || txtUnit.getText().isEmpty() || txtOrigin.getText() == null || txtOrigin.getText().isEmpty() || txtPrice.getText() == null || txtPrice.getText().isEmpty()|| cbCategories.getSelectionModel().getSelectedItem() == null ) {
+            MessageBox.getBox("Thông báo", "Vui lòng nhập đầy đủ thông tin", Alert.AlertType.WARNING).show();
+        } else {
+            Category selectedCategory = (Category) cbCategories.getValue();
+            String categoryId = selectedCategory.getId();
+            Product prod = new Product(
+                    this.txtName.getText(),
+                    this.txtUnit.getText(),
+                    Float.parseFloat(this.txtPrice.getText()),
+                    this.txtOrigin.getText(),
+                    categoryId
+            );
+            try {
+                if (p.addProduct(prod)) {
+                    MessageBox.getBox("Thành công", "Thêm sản phẩm thành công", Alert.AlertType.INFORMATION).show();
+                    loadTableData(null);
+                }
+            } catch (SQLException ex) {
+                MessageBox.getBox("Thất bại", "Thêm sản phẩm thất bại", Alert.AlertType.ERROR).show();
+                Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            MessageBox.getBox("Thất bại", "Thêm sản phẩm thất bại", Alert.AlertType.ERROR).show();
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -118,7 +122,6 @@ public class ProductController implements Initializable {
         TableColumn colName = new TableColumn("Tên");
         colName.setCellValueFactory(new PropertyValueFactory("name"));
         colName.setPrefWidth(250);
-
         TableColumn colUnit = new TableColumn("Đơn vị");
         colUnit.setCellValueFactory(new PropertyValueFactory("unit"));
         colUnit.setPrefWidth(120);
@@ -223,23 +226,28 @@ public class ProductController implements Initializable {
                 btnAdd.setVisible(false);
                 btnSave.setVisible(true);
                 btnSave.setOnAction(event -> {
-                    Category selectedCategory = (Category) cbCategories.getValue();
-           String categoryId = selectedCategory.getId();
-                    prod.setName(txtName.getText());
-                    prod.setUnit(txtUnit.getText());
-                    prod.setPrice(Float.parseFloat(txtPrice.getText()));
-                    prod.setOrigin(txtOrigin.getText());
-                    prod.setCategoryID(categoryId);
-                    try {
+                    if (txtName.getText() == null || txtName.getText().isEmpty() || txtUnit.getText() == null || txtUnit.getText().isEmpty() || txtOrigin.getText() == null || txtOrigin.getText().isEmpty() || txtPrice.getText() == null || txtPrice.getText().isEmpty()|| cbCategories.getSelectionModel().getSelectedItem() == null ) {
+                        MessageBox.getBox("Thông báo", "Vui lòng nhập đầy đủ thông tin", Alert.AlertType.WARNING).show();
+                    } else {
+                        Category selectedCategory = (Category) cbCategories.getValue();
+                        String categoryId = selectedCategory.getId();
+                        prod.setName(txtName.getText());
+                        prod.setUnit(txtUnit.getText());
+                        prod.setPrice(Float.parseFloat(txtPrice.getText()));
+                        prod.setOrigin(txtOrigin.getText());
+                        prod.setCategoryID(categoryId);
+                        try {
 
-                        if (p.updateProduct(prod)) {
-                            resetUI();
-                            MessageBox.getBox("Thành công", "Sửa sản phẩm thành công", Alert.AlertType.INFORMATION).show();
-                            loadTableData(null);
+                            if (p.updateProduct(prod)) {
+                                resetUI();
+                                MessageBox.getBox("Thành công", "Sửa sản phẩm thành công", Alert.AlertType.INFORMATION).show();
+                                loadTableData(null);
+                            }
                         }
-                    } catch (SQLException ex) {
-                        MessageBox.getBox("Thất bại", "Sửa sản phẩm thất bại", Alert.AlertType.ERROR).show();
-                        Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+                        catch (SQLException ex) {
+                            MessageBox.getBox("Thất bại", "Sửa sản phẩm thất bại", Alert.AlertType.ERROR).show();
+                            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
             });

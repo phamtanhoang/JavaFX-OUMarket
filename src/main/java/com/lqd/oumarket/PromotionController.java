@@ -81,26 +81,78 @@ public class PromotionController implements Initializable {
     }
 
     public void addPromotionHandler(ActionEvent event) throws SQLException {
-        Product selectedProduct = (Product) cbProducts.getSelectionModel().getSelectedItem();
-        String id = selectedProduct.getId();
-        Promotion promotion = new Promotion(
-                java.sql.Date.valueOf(this.dpFromDate.getValue()),
-                java.sql.Date.valueOf(this.dpToDate.getValue()),
-                Float.parseFloat(txtNewPrice.getText()),
-                selectedProduct.getId());
-
-        try {
-            if (p.addPromotion(promotion)) {
-                MessageBox.getBox("Thông báo", "Thêm thành công", Alert.AlertType.INFORMATION).show();
-                loadTableData();
-                resetUI();
+        if (txtNewPrice.getText() == null || txtNewPrice.getText().isEmpty() || dpFromDate.getValue() == null ||dpToDate.getValue()==null|| cbProducts.getSelectionModel().getSelectedItem() == null) {
+            MessageBox.getBox("Thông báo", "Vui lòng nhập đầy đủ thông tin", Alert.AlertType.WARNING).show();
+        } else {
+            Product selectedProduct = (Product) cbProducts.getSelectionModel().getSelectedItem();
+            String id = selectedProduct.getId();
+            Promotion promotion = new Promotion(
+                    java.sql.Date.valueOf(this.dpFromDate.getValue()),
+                    java.sql.Date.valueOf(this.dpToDate.getValue()),
+                    Float.parseFloat(txtNewPrice.getText()),
+                    selectedProduct.getId());
+            if (promotion.getFromDate().compareTo(promotion.getToDate()) > 0) {
+                MessageBox.getBox("Thông báo", "Thời gian diễn ra khuyến mãi không hợp lệ", Alert.AlertType.INFORMATION).show();
+                return;
             }
-        } catch (SQLException ex) {
-            MessageBox.getBox("Thông báo", "Thêm thất bại", Alert.AlertType.ERROR).show();
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                Promotion promotionTest = p.getPromotionByProductID(promotion.getProductID());
+                if (promotionTest == null) {
+                    if (p.addPromotion(promotion)) {
+                        MessageBox.getBox("Thông báo", "Thêm thành công", Alert.AlertType.INFORMATION).show();
+                        loadTableData();
+                        resetUI();
+                    }
+                } else {
+                    if (isOverlapping(promotionTest, promotion)) {
+                        Alert a = MessageBox.getBox("Khuyến mãi bị trùng",
+                                "Bạn có muốn cập nhật khuyễn mãi cũ không?",
+                                Alert.AlertType.CONFIRMATION);
+                        a.showAndWait().ifPresent(res -> {
+                            if (res == ButtonType.OK) {
+                                try {
+                                    promotionTest.setFromDate(promotion.getFromDate());
+                                    promotionTest.setToDate(promotion.getToDate());
+                                    promotionTest.setNewPrice(promotion.getNewPrice());
+                                    p.updatePromotion(promotionTest);
+                                    MessageBox.getBox("Thông báo", "Thêm thành công", Alert.AlertType.INFORMATION).show();
+                                    resetUI();
+                                } catch (SQLException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+                    } else {
+                        if (p.addPromotion(promotion)) {
+                            MessageBox.getBox("Thông báo", "Thêm thành công", Alert.AlertType.INFORMATION).show();
+                            loadTableData();
+                            resetUI();
+                        }
+                    }
+                }
+            } catch (SQLException ex) {
+                MessageBox.getBox("Thông báo", "Thêm thất bại", Alert.AlertType.ERROR).show();
+                Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
+    public boolean isOverlapping(Promotion oldPromotion, Promotion newPromotion) {
+        if (oldPromotion.getFromDate().compareTo(newPromotion.getFromDate()) <= 0
+                && oldPromotion.getToDate().compareTo(newPromotion.getFromDate()) >= 0) {
+            // Ngày bắt đầu của khuyến mãi mới nằm trong khoảng thời gian của khuyến mãi cũ
+            return true;
+        } else if (oldPromotion.getFromDate().compareTo(newPromotion.getToDate()) <= 0
+                && oldPromotion.getToDate().compareTo(newPromotion.getToDate()) >= 0) {
+            // Ngày kết thúc của khuyến mãi mới nằm trong khoảng thời gian của khuyến mãi cũ
+            return true;
+        } else if (oldPromotion.getFromDate().compareTo(newPromotion.getFromDate()) >= 0
+                && oldPromotion.getToDate().compareTo(newPromotion.getToDate()) <= 0) {
+            // Khoảng thời gian của khuyến mãi mới hoàn toàn nằm trong khoảng thời gian của khuyến mãi cũ
+            return true;
+        } else {
+            return false;
+        }
+    }
     public void CancelPromotionHandler(ActionEvent event) throws SQLException {
         resetUI();
     }
@@ -210,27 +262,82 @@ public class PromotionController implements Initializable {
 
                 dpFromDate.setValue(promotion.getFromDate().toLocalDate());
                 dpToDate.setValue(promotion.getToDate().toLocalDate());
+                if(promotion.getFromDate().compareTo(promotion.getToDate())>0){
+                    MessageBox.getBox("Thông báo", "Thời gian diễn ra khuyến mãi không hợp lệ", Alert.AlertType.INFORMATION).show();
+                    return;
+                }
                 btnAdd.setVisible(false);
                 btnSave.setVisible(true);
                 btnSave.setOnAction(event -> {
-                    Product selectedProduct = (Product) cbProducts.getSelectionModel().getSelectedItem();
-                    String id = selectedProduct.getId();
-                    promotion.setProductID(id);
-                    promotion.setFromDate(java.sql.Date.valueOf(this.dpFromDate.getValue()));
-                    promotion.setToDate(java.sql.Date.valueOf(this.dpToDate.getValue()));
-                    promotion.setNewPrice(Float.parseFloat(txtNewPrice.getText()));
-                    try {
+                    if (txtNewPrice.getText() == null || txtNewPrice.getText().isEmpty() || dpFromDate.getValue() == null ||dpToDate.getValue()==null|| cbProducts.getSelectionModel().getSelectedItem() == null ) {
+                        MessageBox.getBox("Thông báo", "Vui lòng nhập đầy đủ thông tin", Alert.AlertType.WARNING).show();
+                    } else {
+                        Product selectedProduct = (Product) cbProducts.getSelectionModel().getSelectedItem();
+                        String id = selectedProduct.getId();
+                        try {
+                            Promotion promotionTest = p.getPromotionByProductID(id);
+                            if (promotionTest == null || promotionTest.getId().equals(promotion.getId())) {
+                                promotion.setProductID(id);
+                                promotion.setFromDate(java.sql.Date.valueOf(this.dpFromDate.getValue()));
+                                promotion.setToDate(java.sql.Date.valueOf(this.dpToDate.getValue()));
+                                promotion.setNewPrice(Float.parseFloat(txtNewPrice.getText()));
+                                try {
 
-                        if (p.updatePromotion(promotion)) {
-                            MessageBox.getBox("Thành công", "Chỉnh sửa thành công", Alert.AlertType.INFORMATION).show();
-                            loadTableData();
-                            resetUI();
+                                    if (p.updatePromotion(promotion)) {
+                                        MessageBox.getBox("Thành công", "Chỉnh sửa thành công", Alert.AlertType.INFORMATION).show();
+                                        loadTableData();
+                                        resetUI();
+                                    }
+                                } catch (SQLException ex) {
+                                    btnAdd.setVisible(true);
+                                    btnSave.setVisible(false);
+                                    MessageBox.getBox("Thất bại", "Chỉnh sửa thất bại", Alert.AlertType.ERROR).show();
+                                    Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } else {
+                                if (isOverlapping(promotion, promotionTest)) {
+                                    Alert a = MessageBox.getBox("Khuyến mãi bị trùng",
+                                            "Bạn có muốn cập nhật khuyễn mãi này và xóa khuyến mãi cũ bị trùng không?",
+                                            Alert.AlertType.CONFIRMATION);
+                                    a.showAndWait().ifPresent(res -> {
+                                        if (res == ButtonType.OK) {
+                                            try {
+                                                promotion.setProductID(id);
+                                                promotion.setFromDate(promotion.getFromDate());
+                                                promotion.setToDate(promotion.getToDate());
+                                                promotion.setNewPrice(promotion.getNewPrice());
+                                                p.updatePromotion(promotion);
+                                                p.deletePromotion(promotionTest.getId());
+                                                MessageBox.getBox("Thông báo", "Sửa thành công", Alert.AlertType.INFORMATION).show();
+                                                resetUI();
+                                            } catch (SQLException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    promotion.setProductID(id);
+                                    promotion.setFromDate(java.sql.Date.valueOf(this.dpFromDate.getValue()));
+                                    promotion.setToDate(java.sql.Date.valueOf(this.dpToDate.getValue()));
+                                    promotion.setNewPrice(Float.parseFloat(txtNewPrice.getText()));
+                                    try {
+
+                                        if (p.updatePromotion(promotion)) {
+                                            MessageBox.getBox("Thành công", "Chỉnh sửa thành công", Alert.AlertType.INFORMATION).show();
+                                            loadTableData();
+                                            resetUI();
+                                        }
+                                    } catch (SQLException ex) {
+                                        btnAdd.setVisible(true);
+                                        btnSave.setVisible(false);
+                                        MessageBox.getBox("Thất bại", "Chỉnh sửa thất bại", Alert.AlertType.ERROR).show();
+                                        Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
                         }
-                    } catch (SQLException ex) {
-                        btnAdd.setVisible(true);
-                        btnSave.setVisible(false);
-                        MessageBox.getBox("Thất bại", "Chỉnh sửa thất bại", Alert.AlertType.ERROR).show();
-                        Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
             });

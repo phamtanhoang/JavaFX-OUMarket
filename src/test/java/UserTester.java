@@ -48,7 +48,7 @@ public class UserTester {
     @DisplayName("Kiểm tra thêm người dùng")
     public void testAddUser() throws SQLException {
         // Tạo đối tượng người dùng mới
-        User user = new User( "Nguyễn Văn A", Date.valueOf("2002 - 12 - 06"),"Nam", "0909123456", "123 ABC St.", "staff", "nguyenvana@gmail.com", "nguyenvana", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User( "Nguyễn Văn A", Date.valueOf("2002-12-06"),"Nam", "0909123456", "123 ABC St.", "staff", "nguyenvana@gmail.com", "nguyenvana", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
 
         // Thêm người dùng mới vào cơ sở dữ liệu
         boolean added = userService.addUser(user);
@@ -77,7 +77,7 @@ public class UserTester {
     @DisplayName("Kiểm tra cập nhật người dùng")
     public void testUpdateUser() throws SQLException {
         // Tạo đối tượng người dùng mới
-        User user = new User("Nguyễn Văn B",  Date.valueOf("2002 - 12 - 06"), "Nam", "0909123457", "123 ABC St.", "staff", "nguyenvanb@gmail.com", "nguyenvanb", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User("Nguyễn Văn B",  Date.valueOf("2002-12-06"), "Nam", "0909123457", "123 ABC St.", "staff", "nguyenvanb@gmail.com", "nguyenvanb", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
 
         // Thêm người dùng mới vào cơ sở dữ liệu
         userService.addUser(user);
@@ -111,7 +111,7 @@ public class UserTester {
     @DisplayName("Kiểm tra xóa người dùng")
     public void testDeleteUser() throws SQLException {
         // Tạo một người dùng mới để xóa
-        User user = new User("Nguyễn Văn C",  Date.valueOf("2002 - 12 - 06"),"Nam", "0909123465", "123 ABC St.", "staff", "nguyenvanc@gmail.com", "nguyenvanc", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User("Nguyễn Văn C",  Date.valueOf("2002-12-06"),"Nam", "0909123465", "123 ABC St.", "staff", "nguyenvanc@gmail.com", "nguyenvanc", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
         userService.addUser(user);
 
         // Xóa người dùng theo id
@@ -127,7 +127,7 @@ public class UserTester {
     @DisplayName("Kiểm tra đăng nhập")
     public void testCheckUser() throws SQLException {
         // Tạo tài khoản người dùng mới
-        User user = new User("Nguyễn Văn D",  Date.valueOf("2002 - 12 - 06"),"Nam", "0909123423", "123 ABC St.", "staff", "nguyenvand@gmail.com", "nguyenvand", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User("Nguyễn Văn D",  Date.valueOf("2002-12-06"),"Nam", "0909123423", "123 ABC St.", "staff", "nguyenvand@gmail.com", "nguyenvand", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
         userService.addUser(user);
 
         // Kiểm tra đăng nhập với tài khoản đã tạo
@@ -182,7 +182,7 @@ public class UserTester {
     }
     @Test
     public void testAddDuplicate(){
-        User user = new User("Nguyễn Văn E",  Date.valueOf("2002 - 12 - 06"),"Nam", "0909123423", "123 ABC St.", "staff", "nguyenvand@gmail.com", "nguyenvand", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User("Nguyễn Văn E",  Date.valueOf("2002-12-06"),"Nam", "0909123423", "123 ABC St.", "staff", "nguyenvand@gmail.com", "nguyenvand", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
 
 
         try {

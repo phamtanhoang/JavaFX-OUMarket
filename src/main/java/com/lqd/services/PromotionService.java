@@ -4,6 +4,7 @@
  */
 package com.lqd.services;
 
+import com.lqd.pojo.Product;
 import com.lqd.pojo.Promotion;
 import java.sql.Connection;
 import java.sql.Date;
@@ -108,6 +109,34 @@ public class PromotionService {
             stm.setString(1, id);
 
             return stm.executeUpdate() > 0;
+        }
+    }
+
+    public Promotion getPromotionByProductID(String id) throws SQLException{
+        try (Connection conn = jdbcService.getConn()) {
+            String sql = "Select * from promotion";
+            if (id != null && !id.isEmpty()) {
+                sql += " WHERE productid =?";
+            }
+
+            PreparedStatement stm = conn.prepareCall(sql);
+
+            if (id != null && !id.isEmpty()) {
+                stm.setString(1, id);
+            }
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Promotion p = new Promotion(rs.getString("id"),
+                        rs.getDate("fromdate"),
+                        rs.getDate("todate"),
+                        rs.getFloat("newprice"),
+                        rs.getString("productID"));
+
+                return p;
+            }
+
+            return null;
         }
     }
 }
