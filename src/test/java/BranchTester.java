@@ -51,7 +51,7 @@ public class BranchTester {
         Branch retrievedBranch = branchService.getBranchByID("0210ea9c-7811-417f-945e-5f6478e23fa3");
         Assertions.assertNotNull(retrievedBranch);
         Assertions.assertEquals("OUMarket Âu Cơ", retrievedBranch.getName());
-        Assertions.assertEquals("254/32 Âu Cơ", retrievedBranch.getAdress());
+        Assertions.assertEquals("254 Âu Cơ", retrievedBranch.getAdress());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BranchTester {
         Branch retrievedBranch = branchService.getBranchByName("OUMarket Âu Cơ");
         Assertions.assertNotNull(retrievedBranch);
         Assertions.assertEquals("0210ea9c-7811-417f-945e-5f6478e23fa3", retrievedBranch.getId());
-        Assertions.assertEquals("254/32 Âu Cơ", retrievedBranch.getAdress());
+        Assertions.assertEquals("254 Âu Cơ", retrievedBranch.getAdress());
     }
 
     @Test

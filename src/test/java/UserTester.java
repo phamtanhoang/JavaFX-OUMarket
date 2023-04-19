@@ -1,3 +1,4 @@
+import com.lqd.pojo.Category;
 import com.lqd.pojo.Customer;
 import com.lqd.pojo.User;
 import com.lqd.services.CustomerService;
@@ -47,7 +48,7 @@ public class UserTester {
     @DisplayName("Kiểm tra thêm người dùng")
     public void testAddUser() throws SQLException {
         // Tạo đối tượng người dùng mới
-        User user = new User( "Nguyễn Văn A", new Date(2002 - 12 - 05),"Nam", "0909123456", "123 ABC St.", "staff", "nguyenvana@gmail.com", "nguyenvana", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User( "Nguyễn Văn A", Date.valueOf("2002 - 12 - 06"),"Nam", "0909123456", "123 ABC St.", "staff", "nguyenvana@gmail.com", "nguyenvana", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
 
         // Thêm người dùng mới vào cơ sở dữ liệu
         boolean added = userService.addUser(user);
@@ -69,13 +70,14 @@ public class UserTester {
         Assertions.assertEquals(user.getUsername(), addedUser.getUsername());
         Assertions.assertEquals(user.getPassword(), addedUser.getPassword());
         Assertions.assertEquals(user.getBranchID(), addedUser.getBranchID());
+        Assertions.assertEquals(user.getDateOfBirth(),addedUser.getDateOfBirth());
     }
 
     @Test
     @DisplayName("Kiểm tra cập nhật người dùng")
     public void testUpdateUser() throws SQLException {
         // Tạo đối tượng người dùng mới
-        User user = new User("Nguyễn Văn B", new Date(2002 - 12 - 05), "Nam", "0909123457", "123 ABC St.", "staff", "nguyenvanb@gmail.com", "nguyenvanb", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User("Nguyễn Văn B",  Date.valueOf("2002 - 12 - 06"), "Nam", "0909123457", "123 ABC St.", "staff", "nguyenvanb@gmail.com", "nguyenvanb", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
 
         // Thêm người dùng mới vào cơ sở dữ liệu
         userService.addUser(user);
@@ -102,13 +104,14 @@ public class UserTester {
         Assertions.assertEquals(user.getUsername(), updatedUser.getUsername());
         Assertions.assertEquals(user.getPassword(), updatedUser.getPassword());
         Assertions.assertEquals(user.getBranchID(), updatedUser.getBranchID());
+        Assertions.assertEquals(user.getDateOfBirth(), updatedUser.getDateOfBirth());
     }
 
     @Test
     @DisplayName("Kiểm tra xóa người dùng")
     public void testDeleteUser() throws SQLException {
         // Tạo một người dùng mới để xóa
-        User user = new User("Nguyễn Văn C", new Date(2002 - 12 - 05),"Nam", "0909123465", "123 ABC St.", "staff", "nguyenvanc@gmail.com", "nguyenvanc", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User("Nguyễn Văn C",  Date.valueOf("2002 - 12 - 06"),"Nam", "0909123465", "123 ABC St.", "staff", "nguyenvanc@gmail.com", "nguyenvanc", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
         userService.addUser(user);
 
         // Xóa người dùng theo id
@@ -124,7 +127,7 @@ public class UserTester {
     @DisplayName("Kiểm tra đăng nhập")
     public void testCheckUser() throws SQLException {
         // Tạo tài khoản người dùng mới
-        User user = new User("Nguyễn Văn D", new Date(2002 - 12 - 05),"Nam", "0909123423", "123 ABC St.", "staff", "nguyenvand@gmail.com", "nguyenvand", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+        User user = new User("Nguyễn Văn D",  Date.valueOf("2002 - 12 - 06"),"Nam", "0909123423", "123 ABC St.", "staff", "nguyenvand@gmail.com", "nguyenvand", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
         userService.addUser(user);
 
         // Kiểm tra đăng nhập với tài khoản đã tạo
@@ -141,6 +144,7 @@ public class UserTester {
         Assertions.assertEquals(user.getUsername(), loggedUser.getUsername());
         Assertions.assertEquals(user.getPassword(), loggedUser.getPassword());
         Assertions.assertEquals(user.getBranchID(), loggedUser.getBranchID());
+        Assertions.assertEquals(user.getDateOfBirth(), loggedUser.getDateOfBirth());
 
         // Kiểm tra đăng nhập với tài khoản không tồn tại
         loggedUser = userService.checkUser("nonexistentuser", "invalidpassword");
@@ -174,6 +178,26 @@ public class UserTester {
             } else {
                 return null;
             }
+        }
+    }
+    @Test
+    public void testAddDuplicate(){
+        User user = new User("Nguyễn Văn E",  Date.valueOf("2002 - 12 - 06"),"Nam", "0909123423", "123 ABC St.", "staff", "nguyenvand@gmail.com", "nguyenvand", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", "71c471a5-ce70-45bc-8b48-e3fbf5e78070");
+
+
+        try {
+            boolean actual = userService.addUser(user);
+            Assertions.assertTrue(actual);
+
+            Assertions.assertThrows(SQLIntegrityConstraintViolationException.class, () -> userService.addUser(user));
+
+            String sql = "DELETE  FROM user WHERE id=?";
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1, user.getId());
+
+            Assertions.assertEquals(1,stm.executeUpdate());
+        } catch (SQLException ex) {
+            Logger.getLogger(PromotionTester.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

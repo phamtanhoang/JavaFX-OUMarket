@@ -89,7 +89,7 @@ public class PromotionTester {
 
 
   @Test
-    public void testUpdateProduct(){
+    public void testUpdatePromotion(){
         try {
             Promotion testPromo = new Promotion("4b0b7d7b-8255-44dc-9618-33e07d7f5271", Date.valueOf("2023-04-18"),Date.valueOf("2023-04-18"),3000,"aa0649d8-a32e-45eb-b059-4f3a84484352");
 
