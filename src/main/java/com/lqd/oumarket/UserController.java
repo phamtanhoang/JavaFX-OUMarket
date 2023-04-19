@@ -338,7 +338,7 @@ public class UserController implements Initializable {
     }
 
     private void loadTableData(String kw) throws SQLException {
-        List<User> users = u.getUsers(kw,LoginController.userLogin.getBranchID());
+        List<User> users = u.getUsers(kw);
         this.tbUsers.getItems().clear();
         for (User user : users) {
             // Kiểm tra nếu giá trị của cột "branch" là trống thì gán giá trị mặc định là ""

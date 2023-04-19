@@ -59,12 +59,6 @@ public class Branch {
        this.adress = adress;
    }
 
-
-   public String getID() {
-       throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-   }
-
-
    @Override
    public String toString() {
        return this.name;

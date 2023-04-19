@@ -125,7 +125,7 @@
             <top>
                 <AnchorPane prefHeight="30.0" prefWidth="700.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Label layoutX="241.0" layoutY="15.0" text="Tìm khách hàng:">
+                        <Label layoutX="226.0" layoutY="15.0" text="Tìm khách hàng (SĐT):">
                             <font>
                                 <Font name="System Italic" size="15.0" />
                             </font>
